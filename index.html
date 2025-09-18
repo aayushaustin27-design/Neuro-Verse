@@ -1,0 +1,3316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NeuroVerse - AI-Powered Educational Platform</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --accent-color: #7209b7;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --gray-color: #6c757d;
+            --success-color: #4cc9f0;
+            --bitcoin-color: #f7931a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--light-color);
+            background-color: #0a0e1a;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--bitcoin-color) 100%);
+            border: none;
+            color: white;
+            padding: 12px 30px;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(67, 97, 238, 0.3);
+        }
+        
+        .btn-outline-primary {
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 12px 30px;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+        
+        .section-padding {
+            padding: 80px 0;
+        }
+        
+        /* Navigation */
+        .navbar {
+            background-color: rgba(10, 14, 26, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.5rem;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--bitcoin-color) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .navbar-nav .nav-link {
+            font-weight: 500;
+            margin: 0 10px;
+            color: var(--light-color);
+            transition: all 0.3s ease;
+        }
+        
+        .navbar-nav .nav-link:hover {
+            color: var(--primary-color);
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, #0a0e1a 0%, #050810 100%);
+            padding: 150px 0 100px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-.895-3-2-3-2 .895-2 2 .895 2 2 2zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%234361ee' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.5;
+            z-index: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--bitcoin-color) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: var(--gray-color);
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+        
+        .hero-image {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .gradient-border {
+            position: relative;
+            border-radius: 20px;
+            padding: 3px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--bitcoin-color) 100%);
+        }
+        
+        .gradient-border img {
+            border-radius: 17px;
+            display: block;
+        }
+        
+        /* About Section */
+        .about-section {
+            background-color: #050810;
+            position: relative;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            color: var(--light-color);
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 70px;
+            height: 4px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--bitcoin-color) 100%);
+            border-radius: 2px;
+        }
+        
+        /* Revenue Generation Section */
+        .revenue-section {
+            background-color: #0a0e1a;
+            position: relative;
+        }
+        
+        .revenue-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+            cursor: pointer;
+        }
+        
+        .revenue-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(67, 97, 238, 0.15);
+            border-color: rgba(67, 97, 238, 0.3);
+        }
+        
+        .revenue-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--bitcoin-color) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .revenue-icon i {
+            font-size: 1.8rem;
+            color: var(--light-color);
+        }
+        
+        .revenue-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--light-color);
+        }
+        
+        .revenue-description {
+            color: var(--gray-color);
+            margin-bottom: 0;
+        }
+        
+        /* Features Section */
+        .features-section {
+            background-color: #050810;
+            position: relative;
+        }
+        
+        .feature-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+            cursor: pointer;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(67, 97, 238, 0.15);
+            border-color: rgba(67, 97, 238, 0.3);
+        }
+        
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--bitcoin-color) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .feature-icon i {
+            font-size: 1.8rem;
+            color: var(--light-color);
+        }
+        
+        .feature-title {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: var(--light-color);
+        }
+        
+        .feature-description {
+            color: var(--gray-color);
+            margin-bottom: 0;
+        }
+        
+        /* Impact Section */
+        .impact-section {
+            background-color: #0a0e1a;
+            position: relative;
+        }
+        
+        .impact-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+            border-top: 4px solid transparent;
+            cursor: pointer;
+        }
+        
+        .impact-card.students {
+            border-top-color: var(--primary-color);
+        }
+        
+        .impact-card.parents {
+            border-top-color: var(--bitcoin-color);
+        }
+        
+        .impact-card.teachers {
+            border-top-color: var(--success-color);
+        }
+        
+        .impact-card.schools {
+            border-top-color: var(--secondary-color);
+        }
+        
+        .impact-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(67, 97, 238, 0.15);
+        }
+        
+        .impact-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .impact-icon.students {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary-color);
+        }
+        
+        .impact-icon.parents {
+            background-color: rgba(247, 147, 26, 0.1);
+            color: var(--bitcoin-color);
+        }
+        
+        .impact-icon.teachers {
+            background-color: rgba(76, 201, 240, 0.1);
+            color: var(--success-color);
+        }
+        
+        .impact-icon.schools {
+            background-color: rgba(63, 55, 201, 0.1);
+            color: var(--secondary-color);
+        }
+        
+        .impact-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--light-color);
+        }
+        
+        .impact-description {
+            color: var(--gray-color);
+            margin-bottom: 0;
+        }
+        
+        /* Pricing Section */
+        .pricing-section {
+            background-color: #050810;
+        }
+        
+        .pricing-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 40px 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pricing-card.featured {
+            border: 2px solid var(--primary-color);
+            transform: scale(1.05);
+        }
+        
+        .pricing-card.featured::before {
+            content: "Most Popular";
+            position: absolute;
+            top: 15px;
+            right: -30px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5px 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transform: rotate(45deg);
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(67, 97, 238, 0.15);
+        }
+        
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+        
+        .pricing-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .pricing-title {
+            font-size: 1.8rem;
+            color: var(--light-color);
+            margin-bottom: 10px;
+        }
+        
+        .pricing-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--bitcoin-color) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 5px;
+        }
+        
+        .pricing-period {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+        }
+        
+        .pricing-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 30px;
+        }
+        
+        .pricing-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .pricing-features i {
+            color: var(--success-color);
+            margin-right: 10px;
+        }
+        
+        /* Roadmap Section */
+        .roadmap-section {
+            background-color: #0a0e1a;
+        }
+        
+        .roadmap-timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+        
+        .roadmap-timeline::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--bitcoin-color) 100%);
+            transform: translateX(-50%);
+        }
+        
+        .roadmap-item {
+            position: relative;
+            margin-bottom: 50px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .roadmap-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .roadmap-item:nth-child(odd) {
+            padding-right: 50%;
+            text-align: right;
+        }
+        
+        .roadmap-item:nth-child(even) {
+            padding-left: 50%;
+            text-align: left;
+        }
+        
+        .roadmap-content {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            width: 90%;
+        }
+        
+        .roadmap-item:nth-child(odd) .roadmap-content {
+            margin-left: auto;
+        }
+        
+        .roadmap-dot {
+            position: absolute;
+            top: 30px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--bitcoin-color) 100%);
+            border: 4px solid #0a0e1a;
+            box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.2);
+        }
+        
+        .roadmap-item:nth-child(odd) .roadmap-dot {
+            right: -10px;
+        }
+        
+        .roadmap-item:nth-child(even) .roadmap-dot {
+            left: -10px;
+        }
+        
+        .roadmap-phase {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .roadmap-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--light-color);
+        }
+        
+        .roadmap-description {
+            color: var(--gray-color);
+        }
+        
+        /* Testimonials Section */
+        .testimonials-section {
+            background-color: #050810;
+        }
+        
+        .testimonial-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            position: relative;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+        
+        .testimonial-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .testimonial-card::before {
+            content: """;
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 5rem;
+            color: rgba(67, 97, 238, 0.1);
+            font-family: Georgia, serif;
+        }
+        
+        .testimonial-content {
+            position: relative;
+            z-index: 1;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .testimonial-author img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+        }
+        
+        .testimonial-author-info h5 {
+            margin-bottom: 0;
+            font-size: 1rem;
+        }
+        
+        .testimonial-author-info p {
+            margin-bottom: 0;
+            font-size: 0.9rem;
+            color: var(--gray-color);
+        }
+        
+        /* Contact Section */
+        .contact-section {
+            background-color: #0a0e1a;
+        }
+        
+        .contact-form {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .form-control, .form-select {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--light-color);
+            border-radius: 10px;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+        
+        .form-control:focus, .form-select:focus {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.1);
+            color: var(--light-color);
+        }
+        
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .form-label {
+            color: var(--light-color);
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--bitcoin-color) 100%);
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .cta-title {
+            font-size: 2.5rem;
+            color: var(--light-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .btn-light {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            padding: 12px 30px;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            border: none;
+        }
+        
+        .btn-light:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #050810;
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--bitcoin-color) 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .footer-links h5 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+            color: var(--light-color);
+        }
+        
+        .footer-links h5::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--bitcoin-color) 100%);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .footer-links ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links ul li a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links ul li a:hover {
+            color: var(--primary-color);
+            padding-left: 5px;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-align: center;
+            line-height: 40px;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            min-width: 300px;
+            padding: 15px 20px;
+            border-radius: 10px;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+        }
+        
+        .notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .notification.success {
+            background-color: #28a745;
+        }
+        
+        .notification.error {
+            background-color: #dc3545;
+        }
+        
+        .notification.info {
+            background-color: #17a2b8;
+        }
+        
+        .notification.warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        
+        /* Modal Styles */
+        .modal-content {
+            background-color: #0a0e1a;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+        }
+        
+        .modal-header {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .modal-title {
+            color: var(--light-color);
+        }
+        
+        .modal-body {
+            color: var(--gray-color);
+        }
+        
+        .modal-footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn-close {
+            filter: invert(1);
+        }
+        
+        /* Profile Modal Styles */
+        .profile-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--bitcoin-color) 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 2rem;
+            margin-right: 20px;
+            position: relative;
+        }
+        
+        .profile-avatar-upload {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .profile-avatar-upload:hover {
+            transform: scale(1.1);
+        }
+        
+        .profile-info h3 {
+            margin-bottom: 5px;
+        }
+        
+        .profile-info p {
+            color: var(--gray-color);
+            margin-bottom: 0;
+        }
+        
+        .profile-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            flex: 1;
+            margin: 0 10px;
+        }
+        
+        .stat-card:first-child {
+            margin-left: 0;
+        }
+        
+        .stat-card:last-child {
+            margin-right: 0;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: var(--gray-color);
+            font-size: 0.9rem;
+        }
+        
+        .profile-tabs {
+            margin-bottom: 30px;
+        }
+        
+        .profile-tabs .nav-tabs {
+            border-bottom: none;
+        }
+        
+        .profile-tabs .nav-tabs .nav-link {
+            border: none;
+            border-radius: 10px;
+            padding: 12px 20px;
+            margin-right: 10px;
+            color: var(--gray-color);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .profile-tabs .nav-tabs .nav-link.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .profile-tabs .nav-tabs .nav-link:hover {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary-color);
+        }
+        
+        .profile-tabs .nav-tabs .nav-link.active:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .profile-form .form-control {
+            margin-bottom: 20px;
+        }
+        
+        .profile-form .form-label {
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: var(--light-color);
+        }
+        
+        .profile-form .form-check {
+            margin-bottom: 15px;
+        }
+        
+        .profile-form .form-check-input {
+            width: 1.2rem;
+            height: 1.2rem;
+            margin-top: 0.3rem;
+        }
+        
+        .profile-form .form-check-label {
+            padding-left: 0.5rem;
+        }
+        
+        /* Settings Modal Styles */
+        .settings-tabs {
+            margin-bottom: 30px;
+        }
+        
+        .settings-tabs .nav-tabs {
+            border-bottom: none;
+        }
+        
+        .settings-tabs .nav-tabs .nav-link {
+            border: none;
+            border-radius: 10px;
+            padding: 12px 20px;
+            margin-right: 10px;
+            color: var(--gray-color);
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .settings-tabs .nav-tabs .nav-link.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .settings-tabs .nav-tabs .nav-link:hover {
+            background-color: rgba(67, 97, 238, 0.1);
+            color: var(--primary-color);
+        }
+        
+        .settings-tabs .nav-tabs .nav-link.active:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .settings-form .form-control {
+            margin-bottom: 20px;
+        }
+        
+        .settings-form .form-label {
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: var(--light-color);
+        }
+        
+        .settings-form .form-check {
+            margin-bottom: 15px;
+        }
+        
+        .settings-form .form-check-input {
+            width: 1.2rem;
+            height: 1.2rem;
+            margin-top: 0.3rem;
+        }
+        
+        .settings-form .form-check-label {
+            padding-left: 0.5rem;
+        }
+        
+        .settings-form .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            color: white;
+            padding: 10px 20px;
+            font-weight: 500;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .settings-form .btn-danger:hover {
+            background-color: #c82333;
+            border-color: #bd2130;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(220, 53, 69, 0.3);
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .roadmap-timeline::before {
+                left: 30px;
+            }
+            
+            .roadmap-item {
+                padding-left: 70px !important;
+                padding-right: 0 !important;
+                text-align: left !important;
+            }
+            
+            .roadmap-content {
+                width: 100%;
+            }
+            
+            .roadmap-dot {
+                left: 20px !important;
+                right: auto !important;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .section-padding {
+                padding: 60px 0;
+            }
+            
+            .pricing-card.featured {
+                transform: scale(1);
+            }
+            
+            .profile-stats {
+                flex-direction: column;
+            }
+            
+            .stat-card {
+                margin: 0 0 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">NeuroVerse</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#revenue">Revenue</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#impact">Impact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#pricing">Pricing</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#roadmap">Roadmap</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+                <div class="d-flex ms-3">
+                    <a href="#" class="btn btn-outline-primary" id="loginBtn">Sign In</a>
+                    <a href="#" class="btn btn-primary ms-2" id="signupBtn">Get Started</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="hero-content">
+                        <h1 class="hero-title">NeuroVerse: School Without Walls</h1>
+                        <p class="hero-subtitle">Transforming education through innovative technology and seamless connectivity powered by AI.</p>
+                        <div class="d-flex flex-wrap gap-3">
+                            <a href="#pricing" class="btn btn-primary">Get Started</a>
+                            <a href="#about" class="btn btn-outline-primary">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="hero-image">
+                        <div class="gradient-border">
+                            <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="NeuroVerse Education Platform">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section-padding about-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center mb-5">
+                    <h2 class="section-title">About NeuroVerse</h2>
+                </div>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h3>Revolutionizing Education Technology</h3>
+                    <p>NeuroVerse is an innovative educational platform designed to break down the traditional walls of learning. Our solution connects students, parents, and teachers in a seamless digital ecosystem that enhances educational outcomes and streamlines school management.</p>
+                    <p>Our revenue model focuses on school subscriptions, premium AI features, and strategic partnerships to ensure steady and scalable growth while maintaining our commitment to accessible education.</p>
+                    <div class="d-flex flex-wrap gap-3 mt-4">
+                        <a href="#features" class="btn btn-primary">Explore Features</a>
+                        <a href="#contact" class="btn btn-outline-primary">Contact Us</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="about-image">
+                        <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Education Technology" class="img-fluid rounded-4">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Revenue Generation Section -->
+    <section id="revenue" class="section-padding revenue-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center mb-5">
+                    <h2 class="section-title">Revenue Generation Plan</h2>
+                    <p class="lead">Our revenue focuses on school subscriptions, premium AI features, and strategic partnerships to ensure steady and scalable revenue growth</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-lg-4">
+                    <div class="revenue-card" data-revenue="school-subscriptions">
+                        <div class="revenue-icon">
+                            <i class="fas fa-school"></i>
+                        </div>
+                        <h4 class="revenue-title">School Subscriptions</h4>
+                        <p class="revenue-description">Comprehensive platform access for educational institutions with tiered subscription models based on school size and needs.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="revenue-card" data-revenue="premium-features">
+                        <div class="revenue-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <h4 class="revenue-title">Premium Features</h4>
+                        <p class="revenue-description">Advanced AI-powered tools and analytics available through premium subscription tiers for enhanced educational outcomes.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="revenue-card" data-revenue="online-events">
+                        <div class="revenue-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h4 class="revenue-title">Online Events</h4>
+                        <p class="revenue-description">Virtual classrooms, webinars, and interactive learning experiences accessible from anywhere with premium access.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="revenue-card" data-revenue="ads-sponsorships">
+                        <div class="revenue-icon">
+                            <i class="fas fa-ad"></i>
+                        </div>
+                        <h4 class="revenue-title">Ads & Sponsorships</h4>
+                        <p class="revenue-description">Ethical advertising and sponsorship opportunities that align with educational values and provide additional revenue streams.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="revenue-card" data-revenue="edtech-partnerships">
+                        <div class="revenue-icon">
+                            <i class="fas fa-handshake"></i>
+                        </div>
+                        <h4 class="revenue-title">EdTech Partnerships</h4>
+                        <p class="revenue-description">Strategic collaborations with educational technology providers to enhance platform capabilities and create synergies.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="revenue-card" data-revenue="data-insights">
+                        <div class="revenue-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h4 class="revenue-title">Data Insights</h4>
+                        <p class="revenue-description">Comprehensive analytics and reporting tools for educators and administrators to make data-driven decisions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="section-padding features-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center mb-5">
+                    <h2 class="section-title">Key Features</h2>
+                    <p class="lead">Our platform offers comprehensive solutions for all education stakeholders</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card" data-feature="ai-learning">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h4 class="feature-title">AI-Powered Learning</h4>
+                        <p class="feature-description">Advanced artificial intelligence tools for personalized learning paths and predictive analytics.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card" data-feature="collaborative-spaces">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4 class="feature-title">Collaborative Spaces</h4>
+                        <p class="feature-description">Virtual classrooms and group workspaces that foster collaboration among students and teachers.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card" data-feature="progress-tracking">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                        <h4 class="feature-title">Progress Tracking</h4>
+                        <p class="feature-description">Real-time analytics and reporting to monitor student progress and identify areas for improvement.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card" data-feature="mobile-access">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h4 class="feature-title">Mobile Access</h4>
+                        <p class="feature-description">Full-featured mobile applications for learning on-the-go, available for all major platforms.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card" data-feature="secure-platform">
+                        <div class="feature-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h4 class="feature-title">Secure Platform</h4>
+                        <p class="feature-description">Enterprise-grade security to protect student data and ensure privacy compliance.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="feature-card" data-feature="integration-ready">
+                        <div class="feature-icon">
+                            <i class="fas fa-puzzle-piece"></i>
+                        </div>
+                        <h4 class="feature-title">Integration Ready</h4>
+                        <p class="feature-description">Seamless integration with existing school systems and third-party educational tools.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Section -->
+    <section id="impact" class="section-padding impact-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center mb-5">
+                    <h2 class="section-title">Impact on Stakeholders</h2>
+                    <p class="lead">How NeuroVerse transforms the educational experience</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-lg-3">
+                    <div class="impact-card students" data-impact="students">
+                        <div class="impact-icon students">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <h4 class="impact-title">For Students</h4>
+                        <p class="impact-description">Never miss class, learn anytime with flexible scheduling and access to educational resources from anywhere.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="impact-card parents" data-impact="parents">
+                        <div class="impact-icon parents">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h4 class="impact-title">For Parents</h4>
+                        <p class="impact-description">Get live updates on your child's progress and become more engaged in their educational journey.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="impact-card teachers" data-impact="teachers">
+                        <div class="impact-icon teachers">
+                            <i class="fas fa-chalkboard-teacher"></i>
+                        </div>
+                        <h4 class="impact-title">For Teachers</h4>
+                        <p class="impact-description">Save time on administrative tasks and better focus on teaching with our streamlined tools.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="impact-card schools" data-impact="schools">
+                        <div class="impact-icon schools">
+                            <i class="fas fa-school"></i>
+                        </div>
+                        <h4 class="impact-title">For Schools</h4>
+                        <p class="impact-description">Modernize your institution's image and achieve more efficient management with our comprehensive platform.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="section-padding pricing-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center mb-5">
+                    <h2 class="section-title">Pricing Plans</h2>
+                    <p class="lead">Flexible options for schools and parents</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="pricing-card" data-plan="school">
+                        <div class="pricing-header">
+                            <h3 class="pricing-title">For Schools</h3>
+                            <div class="pricing-price">₹299<span class="pricing-period">/month</span></div>
+                            <p>Comprehensive school management platform</p>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><i class="fas fa-check-circle"></i> Up to 500 students</li>
+                            <li><i class="fas fa-check-circle"></i> Complete administrative tools</li>
+                            <li><i class="fas fa-check-circle"></i> Teacher management system</li>
+                            <li><i class="fas fa-check-circle"></i> Parent communication portal</li>
+                            <li><i class="fas fa-check-circle"></i> Basic analytics & reporting</li>
+                            <li><i class="fas fa-check-circle"></i> Email support</li>
+                        </ul>
+                        <button class="btn btn-primary w-100 plan-btn" data-plan="school">Get Started</button>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="pricing-card featured" data-plan="parent">
+                        <div class="pricing-header">
+                            <h3 class="pricing-title">For Parents</h3>
+                            <div class="pricing-price">₹100<span class="pricing-period">/month</span></div>
+                            <p>Stay connected to your child's education</p>
+                        </div>
+                        <ul class="pricing-features">
+                            <li><i class="fas fa-check-circle"></i> Real-time progress updates</li>
+                            <li><i class="fas fa-check-circle"></i> Direct teacher communication</li>
+                            <li><i class="fas fa-check-circle"></i> Event calendar & reminders</li>
+                            <li><i class="fas fa-check-circle"></i> Access to learning resources</li>
+                            <li><i class="fas fa-check-circle"></i> Attendance tracking</li>
+                            <li><i class="fas fa-check-circle"></i> Mobile app access</li>
+                        </ul>
+                        <button class="btn btn-primary w-100 plan-btn" data-plan="parent">Get Started</button>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-lg-12 text-center">
+                    <p class="lead">Need a custom solution? <a href="#contact" class="text-primary">Contact us for enterprise options</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Roadmap Section -->
+    <section id="roadmap" class="section-padding roadmap-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center mb-5">
+                    <h2 class="section-title">Our Roadmap</h2>
+                    <p class="lead">The future of NeuroVerse development</p>
+                </div>
+            </div>
+            <div class="roadmap-timeline">
+                <div class="roadmap-item" data-phase="1">
+                    <div class="roadmap-content">
+                        <div class="roadmap-phase">Phase 1</div>
+                        <h3 class="roadmap-title">Platform Foundation</h3>
+                        <p class="roadmap-description">Core platform development with essential features for school management, parent communication, and basic student progress tracking. Initial partnerships with pilot schools.</p>
+                    </div>
+                    <div class="roadmap-dot"></div>
+                </div>
+                <div class="roadmap-item" data-phase="2">
+                    <div class="roadmap-content">
+                        <div class="roadmap-phase">Phase 2</div>
+                        <h3 class="roadmap-title">Advanced Features & Expansion</h3>
+                        <p class="roadmap-description">Implementation of AI-powered learning tools, enhanced analytics, and expanded partnership network. Mobile application development and increased marketing efforts.</p>
+                    </div>
+                    <div class="roadmap-dot"></div>
+                </div>
+                <div class="roadmap-item" data-phase="3">
+                    <div class="roadmap-content">
+                        <div class="roadmap-phase">Phase 3</div>
+                        <h3 class="roadmap-title">Global Ecosystem</h3>
+                        <p class="roadmap-description">International expansion, advanced personalization algorithms, integration with additional EdTech solutions, and development of a comprehensive educational marketplace.</p>
+                    </div>
+                    <div class="roadmap-dot"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="section-padding testimonials-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center mb-5">
+                    <h2 class="section-title">Success Stories</h2>
+                    <p class="lead">Hear from our community</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4">
+                    <div class="testimonial-card">
+                        <p class="testimonial-content">"NeuroVerse has transformed how our school operates. The efficiency gains have been remarkable, and parents are more engaged than ever before."</p>
+                        <div class="testimonial-author">
+                            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Principal">
+                            <div class="testimonial-author-info">
+                                <h5>Sarah Johnson</h5>
+                                <p>School Principal</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="testimonial-card">
+                        <p class="testimonial-content">"As a working parent, I love getting real-time updates about my children's progress. NeuroVerse keeps me connected to their education like never before."</p>
+                        <div class="testimonial-author">
+                            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Parent">
+                            <div class="testimonial-author-info">
+                                <h5>Michael Chen</h5>
+                                <p>Parent of Two</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="testimonial-card">
+                        <p class="testimonial-content">"The administrative time I've saved with NeuroVerse allows me to focus more on teaching and less on paperwork. It's a game-changer for educators."</p>
+                        <div class="testimonial-author">
+                            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Teacher">
+                            <div class="testimonial-author-info">
+                                <h5>Emily Rodriguez</h5>
+                                <p>High School Teacher</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section-padding contact-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center mb-5">
+                    <h2 class="section-title">Get In Touch</h2>
+                    <p class="lead">Join the education revolution</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <div class="contact-form">
+                        <form id="contactForm">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" id="contactName" placeholder="Your Name" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="email" class="form-control" id="contactEmail" placeholder="Your Email" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="contactSubject" placeholder="Subject">
+                            </div>
+                            <div class="form-group">
+                                <select class="form-select" id="contactUserType">
+                                    <option value="" selected disabled>I am a...</option>
+                                    <option value="school-administrator">School Administrator</option>
+                                    <option value="teacher">Teacher</option>
+                                    <option value="parent">Parent</option>
+                                    <option value="student">Student</option>
+                                    <option value="partner">Potential Partner</option>
+                                    <option value="investor">Investor</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <textarea class="form-control" id="contactMessage" rows="5" placeholder="Your Message"></textarea>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary px-5">Send Message</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="cta-title">Ready to Transform Education?</h2>
+            <p class="cta-subtitle">Join thousands of schools and parents who are already revolutionizing education with NeuroVerse.</p>
+            <a href="#pricing" class="btn btn-light btn-lg">Get Started Today</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="footer-logo">NeuroVerse</div>
+                    <p>Transforming education through innovative technology and seamless connectivity powered by AI.</p>
+                    <div class="social-links mt-4">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <div class="footer-links">
+                        <h5>Company</h5>
+                        <ul>
+                            <li><a href="#about">About Us</a></li>
+                            <li><a href="#features">Features</a></li>
+                            <li><a href="#pricing">Pricing</a></li>
+                            <li><a href="#roadmap">Roadmap</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <div class="footer-links">
+                        <h5>Resources</h5>
+                        <ul>
+                            <li><a href="#">Blog</a></li>
+                            <li><a href="#">Case Studies</a></li>
+                            <li><a href="#">Documentation</a></li>
+                            <li><a href="#">Support</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="footer-links">
+                        <h5>Contact Us</h5>
+                        <ul>
+                            <li><i class="fas fa-map-marker-alt me-2"></i> 123 Education Street, Learning City</li>
+                            <li><i class="fas fa-phone me-2"></i> +1 (555) 123-4567</li>
+                            <li><i class="fas fa-envelope me-2"></i> info@neuroverse.com</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 NeuroVerse. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="loginModalLabel">Welcome Back</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <div class="mb-3">
+                            <input type="email" class="form-control" id="loginEmail" placeholder="Email Address" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" class="form-control" id="loginPassword" placeholder="Password" required>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </div>
+                    </form>
+                    
+                    <div class="text-center mt-3">
+                        <p>Don't have an account? <a href="#" id="switchToSignup">Sign Up</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="signupModalLabel">Create Account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="signupForm">
+                        <div class="mb-3">
+                            <input type="text" class="form-control" id="signupName" placeholder="Full Name" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="email" class="form-control" id="signupEmail" placeholder="Email Address" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="password" class="form-control" id="signupPassword" placeholder="Password" required>
+                        </div>
+                        <div class="mb-3">
+                            <select class="form-select" id="signupUserType" required>
+                                <option value="" selected disabled>Select User Type</option>
+                                <option value="student">Student</option>
+                                <option value="parent">Parent</option>
+                                <option value="teacher">Teacher</option>
+                                <option value="administrator">School Administrator</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="agreeTerms" required>
+                            <label class="form-check-label" for="agreeTerms">I agree to the <a href="#">Terms and Conditions</a></label>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Sign Up</button>
+                        </div>
+                    </form>
+                    
+                    <div class="text-center mt-3">
+                        <p>Already have an account? <a href="#" id="switchToLogin">Login</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-labelledby="profileModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="profileModalLabel">My Profile</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="profile-header">
+                        <div class="profile-avatar" id="profileAvatar">
+                            U
+                            <div class="profile-avatar-upload">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                        </div>
+                        <div class="profile-info">
+                            <h3 id="profileName">User Name</h3>
+                            <p id="profileEmail">user@example.com</p>
+                            <p id="profileType">User Type</p>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-stats">
+                        <div class="stat-card">
+                            <div class="stat-value" id="coursesCompleted">0</div>
+                            <div class="stat-label">Courses Completed</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="achievementsUnlocked">0</div>
+                            <div class="stat-label">Achievements</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="studyHours">0</div>
+                            <div class="stat-label">Study Hours</div>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-tabs">
+                        <ul class="nav nav-tabs" id="profileTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="overview-tab" data-bs-toggle="tab" data-bs-target="#overview" type="button" role="tab" aria-controls="overview" aria-selected="true">Overview</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit" type="button" role="tab" aria-controls="edit" aria-selected="false">Edit Profile</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="achievements-tab" data-bs-toggle="tab" data-bs-target="#achievements" type="button" role="tab" aria-controls="achievements" aria-selected="false">Achievements</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="profileTabsContent">
+                            <!-- Overview Tab -->
+                            <div class="tab-pane fade show active" id="overview" role="tabpanel" aria-labelledby="overview-tab">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6>Personal Information</h6>
+                                        <p><strong>Full Name:</strong> <span id="overviewName">User Name</span></p>
+                                        <p><strong>Email:</strong> <span id="overviewEmail">user@example.com</span></p>
+                                        <p><strong>User Type:</strong> <span id="overviewType">User Type</span></p>
+                                        <p><strong>Member Since:</strong> <span id="overviewMemberSince">January 1, 2023</span></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <h6>Account Information</h6>
+                                        <p><strong>Account Status:</strong> <span class="badge bg-success">Active</span></p>
+                                        <p><strong>Subscription:</strong> <span id="overviewSubscription">Free</span></p>
+                                        <p><strong>Last Login:</strong> <span id="overviewLastLogin">Today</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Edit Profile Tab -->
+                            <div class="tab-pane fade" id="edit" role="tabpanel" aria-labelledby="edit-tab">
+                                <form id="editProfileForm">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="editName" class="form-label">Full Name</label>
+                                                <input type="text" class="form-control" id="editName" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="editEmail" class="form-label">Email Address</label>
+                                                <input type="email" class="form-control" id="editEmail" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="editPhone" class="form-label">Phone Number</label>
+                                                <input type="tel" class="form-control" id="editPhone">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="editLocation" class="form-label">Location</label>
+                                                <input type="text" class="form-control" id="editLocation">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="editBio" class="form-label">Bio</label>
+                                        <textarea class="form-control" id="editBio" rows="3"></textarea>
+                                    </div>
+                                    <div class="text-end">
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    </div>
+                                </form>
+                            </div>
+                            
+                            <!-- Achievements Tab -->
+                            <div class="tab-pane fade" id="achievements" role="tabpanel" aria-labelledby="achievements-tab">
+                                <div id="achievementsList">
+                                    <div class="achievement-item">
+                                        <div class="achievement-icon">
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <div class="achievement-details">
+                                            <h5>First Steps</h5>
+                                            <p>Completed your first course</p>
+                                        </div>
+                                    </div>
+                                    <div class="achievement-item">
+                                        <div class="achievement-icon">
+                                            <i class="fas fa-fire"></i>
+                                        </div>
+                                        <div class="achievement-details">
+                                            <h5>On Fire</h5>
+                                            <p>7-day learning streak</p>
+                                        </div>
+                                    </div>
+                                    <div class="achievement-item">
+                                        <div class="achievement-icon">
+                                            <i class="fas fa-trophy"></i>
+                                        </div>
+                                        <div class="achievement-details">
+                                            <h5>Top Performer</h5>
+                                            <p>Scored 90% or higher in 5 courses</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="settingsModalLabel">Account Settings</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="settings-tabs">
+                        <ul class="nav nav-tabs" id="settingsTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="true">Profile</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="security-tab" data-bs-toggle="tab" data-bs-target="#security" type="button" role="tab" aria-controls="security" aria-selected="false">Security</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="notifications-tab" data-bs-toggle="tab" data-bs-target="#notifications" type="button" role="tab" aria-controls="notifications" aria-selected="false">Notifications</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="account-tab" data-bs-toggle="tab" data-bs-target="#account" type="button" role="tab" aria-controls="account" aria-selected="false">Account</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content" id="settingsTabsContent">
+                            <!-- Profile Tab -->
+                            <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <form id="profileForm">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="profileName" class="form-label">Full Name</label>
+                                                <input type="text" class="form-control" id="profileName" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="profileEmail" class="form-label">Email Address</label>
+                                                <input type="email" class="form-control" id="profileEmail" required>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="profilePhone" class="form-label">Phone Number</label>
+                                                <input type="tel" class="form-control" id="profilePhone">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label for="profileType" class="form-label">User Type</label>
+                                                <select class="form-select" id="profileType" disabled>
+                                                    <option value="student">Student</option>
+                                                    <option value="parent">Parent</option>
+                                                    <option value="teacher">Teacher</option>
+                                                    <option value="administrator">School Administrator</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="profileBio" class="form-label">Bio</label>
+                                        <textarea class="form-control" id="profileBio" rows="3"></textarea>
+                                    </div>
+                                    <div class="text-end">
+                                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                                    </div>
+                                </form>
+                            </div>
+                            
+                            <!-- Security Tab -->
+                            <div class="tab-pane fade" id="security" role="tabpanel" aria-labelledby="security-tab">
+                                <form id="securityForm">
+                                    <div class="mb-3">
+                                        <label for="currentPassword" class="form-label">Current Password</label>
+                                        <input type="password" class="form-control" id="currentPassword" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="newPassword" class="form-label">New Password</label>
+                                        <input type="password" class="form-control" id="newPassword" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="confirmPassword" class="form-label">Confirm New Password</label>
+                                        <input type="password" class="form-control" id="confirmPassword" required>
+                                    </div>
+                                    <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input" id="twoFactor">
+                                        <label class="form-check-label" for="twoFactor">Enable Two-Factor Authentication</label>
+                                    </div>
+                                    <div class="text-end">
+                                        <button type="submit" class="btn btn-primary">Update Password</button>
+                                    </div>
+                                </form>
+                            </div>
+                            
+                            <!-- Notifications Tab -->
+                            <div class="tab-pane fade" id="notifications" role="tabpanel" aria-labelledby="notifications-tab">
+                                <form id="notificationsForm">
+                                    <h6 class="mb-3">Email Notifications</h6>
+                                    <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input" id="emailUpdates" checked>
+                                        <label class="form-check-label" for="emailUpdates">Receive email updates</label>
+                                    </div>
+                                    <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input" id="courseUpdates" checked>
+                                        <label class="form-check-label" for="courseUpdates">Course updates and announcements</label>
+                                    </div>
+                                    <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input" id="progressReports" checked>
+                                        <label class="form-check-label" for="progressReports">Progress reports</label>
+                                    </div>
+                                    <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input" id="promotional">
+                                        <label class="form-check-label" for="promotional">Promotional offers</label>
+                                    </div>
+                                    
+                                    <h6 class="mb-3 mt-4">Push Notifications</h6>
+                                    <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input" id="pushNotifications" checked>
+                                        <label class="form-check-label" for="pushNotifications">Enable push notifications</label>
+                                    </div>
+                                    <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input" id="assignmentReminders" checked>
+                                        <label class="form-check-label" for="assignmentReminders">Assignment reminders</label>
+                                    </div>
+                                    <div class="mb-3 form-check">
+                                        <input type="checkbox" class="form-check-input" id="messageAlerts" checked>
+                                        <label class="form-check-label" for="messageAlerts">Message alerts</label>
+                                    </div>
+                                    
+                                    <div class="text-end">
+                                        <button type="submit" class="btn btn-primary">Save Preferences</button>
+                                    </div>
+                                </form>
+                            </div>
+                            
+                            <!-- Account Tab -->
+                            <div class="tab-pane fade" id="account" role="tabpanel" aria-labelledby="account-tab">
+                                <div class="mb-4">
+                                    <h6>Account Information</h6>
+                                    <p><strong>Member Since:</strong> <span id="memberSince">January 1, 2023</span></p>
+                                    <p><strong>Account Type:</strong> <span id="accountType">Free</span></p>
+                                    <p><strong>Last Login:</strong> <span id="lastLogin">Today</span></p>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <h6>Subscription</h6>
+                                    <p>Upgrade to Premium to unlock all features</p>
+                                    <button class="btn btn-primary">Upgrade Now</button>
+                                </div>
+                                
+                                <div class="mb-4">
+                                    <h6>Danger Zone</h6>
+                                    <p>These actions are irreversible. Please proceed with caution.</p>
+                                    <button class="btn btn-outline-danger me-2" data-bs-toggle="modal" data-bs-target="#deactivateModal">Deactivate Account</button>
+                                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete Account</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deactivate Account Modal -->
+    <div class="modal fade" id="deactivateModal" tabindex="-1" aria-labelledby="deactivateModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deactivateModalLabel">Deactivate Account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to deactivate your account? You can reactivate it at any time by logging back in.</p>
+                    <div class="mb-3">
+                        <label for="deactivateReason" class="form-label">Reason for deactivation (optional)</label>
+                        <textarea class="form-control" id="deactivateReason" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="confirmDeactivate" required>
+                        <label class="form-check-label" for="confirmDeactivate">I understand that deactivating my account will temporarily disable it</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-warning" id="deactivateAccountBtn">Deactivate Account</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Account Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Delete Account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <strong>Warning:</strong> This action cannot be undone. This will permanently delete your account and remove all your data.
+                    </div>
+                    <p>To confirm, please type <strong>DELETE</strong> in the box below:</p>
+                    <div class="mb-3">
+                        <input type="text" class="form-control" id="deleteConfirm" required>
+                    </div>
+                    <div class="mb-3 form-check">
+                        <input type="checkbox" class="form-check-input" id="confirmDelete" required>
+                        <label class="form-check-label" for="confirmDelete">I understand that this action is irreversible</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-danger" id="deleteAccountBtn">Delete Account</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feature Detail Modal -->
+    <div class="modal fade" id="featureModal" tabindex="-1" aria-labelledby="featureModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="featureModalLabel">Feature Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="featureModalContent">
+                        <!-- Feature details will be dynamically inserted here -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="tryFeatureBtn">Try It Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Revenue Detail Modal -->
+    <div class="modal fade" id="revenueModal" tabindex="-1" aria-labelledby="revenueModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="revenueModalLabel">Revenue Stream Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="revenueModalContent">
+                        <!-- Revenue details will be dynamically inserted here -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="learnMoreRevenueBtn">Learn More</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Impact Detail Modal -->
+    <div class="modal fade" id="impactModal" tabindex="-1" aria-labelledby="impactModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="impactModalLabel">Impact Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="impactModalContent">
+                        <!-- Impact details will be dynamically inserted here -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="getStartedImpactBtn">Get Started</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Plan Detail Modal -->
+    <div class="modal fade" id="planModal" tabindex="-1" aria-labelledby="planModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="planModalLabel">Plan Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="planModalContent">
+                        <!-- Plan details will be dynamically inserted here -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-primary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="subscribePlanBtn">Subscribe Now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // User authentication state
+            let isLoggedIn = false;
+            let currentUser = null;
+            let userSettings = {
+                emailUpdates: true,
+                courseUpdates: true,
+                progressReports: true,
+                promotional: false,
+                pushNotifications: true,
+                assignmentReminders: true,
+                messageAlerts: true
+            };
+            
+            // User profile data
+            let userProfile = {
+                name: '',
+                email: '',
+                type: '',
+                phone: '',
+                location: '',
+                bio: '',
+                memberSince: '',
+                accountType: 'Free',
+                coursesCompleted: 0,
+                achievementsUnlocked: 0,
+                studyHours: 0
+            };
+            
+            // Feature details data
+            const featureDetails = {
+                'ai-learning': {
+                    title: 'AI-Powered Learning',
+                    icon: 'fas fa-brain',
+                    description: 'Our advanced AI algorithms analyze each student\'s learning patterns, strengths, and weaknesses to create personalized learning paths that adapt in real-time.',
+                    benefits: [
+                        'Personalized learning paths based on individual needs',
+                        'Real-time adaptation to student progress',
+                        'Predictive analytics to identify learning gaps',
+                        'Automated content recommendations',
+                        'Intelligent assessment and feedback'
+                    ],
+                    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+                },
+                'collaborative-spaces': {
+                    title: 'Collaborative Spaces',
+                    icon: 'fas fa-users',
+                    description: 'Virtual classrooms and group workspaces that foster collaboration among students and teachers, breaking down geographical barriers.',
+                    benefits: [
+                        'Real-time collaboration tools',
+                        'Virtual breakout rooms',
+                        'Shared whiteboards and documents',
+                        'Video conferencing capabilities',
+                        'Group project management'
+                    ],
+                    image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1171&q=80'
+                },
+                'progress-tracking': {
+                    title: 'Progress Tracking',
+                    icon: 'fas fa-chart-bar',
+                    description: 'Comprehensive analytics and reporting tools to monitor student progress and identify areas for improvement.',
+                    benefits: [
+                        'Real-time progress dashboards',
+                        'Detailed performance analytics',
+                        'Customizable reports',
+                        'Early warning systems for at-risk students',
+                        'Parent-teacher communication tools'
+                    ],
+                    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+                },
+                'mobile-access': {
+                    title: 'Mobile Access',
+                    icon: 'fas fa-mobile-alt',
+                    description: 'Full-featured mobile applications for learning on-the-go, available for all major platforms.',
+                    benefits: [
+                        'iOS and Android applications',
+                        'Offline content access',
+                        'Push notifications for assignments',
+                        'Mobile-friendly interface',
+                        'Seamless sync across devices'
+                    ],
+                    image: 'https://images.unsplash.com/photo-1551706554-57d44100abfc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+                },
+                'secure-platform': {
+                    title: 'Secure Platform',
+                    icon: 'fas fa-shield-alt',
+                    description: 'Enterprise-grade security to protect student data and ensure privacy compliance.',
+                    benefits: [
+                        'End-to-end encryption',
+                        'GDPR and COPPA compliance',
+                        'Regular security audits',
+                        'Role-based access control',
+                        'Data backup and recovery'
+                    ],
+                    image: 'https://images.unsplash.com/photo-1614064641938-3bbee52942c7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+                },
+                'integration-ready': {
+                    title: 'Integration Ready',
+                    icon: 'fas fa-puzzle-piece',
+                    description: 'Seamless integration with existing school systems and third-party educational tools.',
+                    benefits: [
+                        'LMS integration (Canvas, Blackboard, etc.)',
+                        'SIS integration for student data',
+                        'API for custom integrations',
+                        'Single sign-on capabilities',
+                        'Third-party app marketplace'
+                    ],
+                    image: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+                }
+            };
+            
+            // Revenue stream details data
+            const revenueDetails = {
+                'school-subscriptions': {
+                    title: 'School Subscriptions',
+                    icon: 'fas fa-school',
+                    description: 'Our primary revenue stream comes from institutional subscriptions that provide comprehensive access to the NeuroVerse platform.',
+                    details: [
+                        'Tiered pricing based on school size and needs',
+                        'Annual and monthly payment options',
+                        'Volume discounts for school districts',
+                        'Custom enterprise solutions for large institutions',
+                        'Dedicated account management for premium tiers'
+                    ],
+                    stats: [
+                        { label: 'Average Contract Value', value: '₹4,15,000/year' },
+                        { label: 'Retention Rate', value: '92%' },
+                        { label: 'Growth Rate', value: '35% YoY' }
+                    ],
+                    image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+                },
+                'premium-features': {
+                    title: 'Premium Features',
+                    icon: 'fas fa-star',
+                    description: 'Advanced AI-powered tools and analytics available through premium subscription tiers for enhanced educational outcomes.',
+                    details: [
+                        'AI-powered personalized learning paths',
+                        'Advanced analytics and reporting',
+                        'Predictive insights for student performance',
+                        'Premium content libraries',
+                        'Priority customer support'
+                    ],
+                    stats: [
+                        { label: 'Conversion Rate', value: '18%' },
+                        { label: 'ARPU', value: '₹1,245/month' },
+                        { label: 'Upsell Potential', value: '₹1.7 Cr' }
+                    ],
+                    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+                },
+                'online-events': {
+                    title: 'Online Events',
+                    icon: 'fas fa-calendar-alt',
+                    description: 'Virtual classrooms, webinars, and interactive learning experiences accessible from anywhere with premium access.',
+                    details: [
+                        'Virtual workshops and seminars',
+                        'Interactive Q&A sessions with experts',
+                        'Recorded content library',
+                        'Certification programs',
+                        'Exclusive member-only events'
+                    ],
+                    stats: [
+                        { label: 'Events per Month', value: '15+' },
+                        { label: 'Attendance Rate', value: '78%' },
+                        { label: 'Revenue Share', value: '15%' }
+                    ],
+                    image: 'https://images.unsplash.com/photo-1579389083078-4e7018379f7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+                },
+                'ads-sponsorships': {
+                    title: 'Ads & Sponsorships',
+                    icon: 'fas fa-ad',
+                    description: 'Ethical advertising and sponsorship opportunities that align with educational values and provide additional revenue streams.',
+                    details: [
+                        'Carefully vetted educational sponsors',
+                        'Non-intrusive ad placements',
+                        'Sponsored content and resources',
+                        'Partnership with educational brands',
+                        'Custom sponsorship packages'
+                    ],
+                    stats: [
+                        { label: 'CPM Rate', value: '₹1,000' },
+                        { label: 'Fill Rate', value: '65%' },
+                        { label: 'Revenue Contribution', value: '10%' }
+                    ],
+                    image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+                },
+                'edtech-partnerships': {
+                    title: 'EdTech Partnerships',
+                    icon: 'fas fa-handshake',
+                    description: 'Strategic collaborations with educational technology providers to enhance platform capabilities and create synergies.',
+                    details: [
+                        'Revenue sharing with integration partners',
+                        'Co-marketing initiatives',
+                        'Joint product development',
+                        'API licensing opportunities',
+                        'White-label solutions for partners'
+                    ],
+                    stats: [
+                        { label: 'Active Partners', value: '25+' },
+                        { label: 'Partner Revenue', value: '₹15 Cr' },
+                        { label: 'Growth Rate', value: '40% YoY' }
+                    ],
+                    image: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1171&q=80'
+                },
+                'data-insights': {
+                    title: 'Data Insights',
+                    icon: 'fas fa-chart-line',
+                    description: 'Comprehensive analytics and reporting tools for educators and administrators to make data-driven decisions.',
+                    details: [
+                        'Aggregated anonymized data products',
+                        'Industry benchmarking reports',
+                        'Custom research services',
+                        'Data licensing opportunities',
+                        'Consulting services for institutions'
+                    ],
+                    stats: [
+                        { label: 'Data Points Analyzed', value: '500M+' },
+                        { label: 'Report Downloads', value: '12K/month' },
+                        { label: 'Revenue Growth', value: '55% YoY' }
+                    ],
+                    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+                }
+            };
+            
+            // Impact details data
+            const impactDetails = {
+                'students': {
+                    title: 'For Students',
+                    icon: 'fas fa-user-graduate',
+                    description: 'NeuroVerse empowers students with flexible learning options and personalized educational experiences.',
+                    benefits: [
+                        'Access to learning materials anytime, anywhere',
+                        'Personalized learning paths based on individual needs',
+                        'Interactive and engaging content',
+                        'Real-time feedback on progress',
+                        'Collaboration tools for group projects',
+                        'Gamification elements to increase motivation'
+                    ],
+                    testimonials: [
+                        {
+                            quote: "NeuroVerse has completely changed how I learn. I can study at my own pace and get help when I need it.",
+                            author: "Alex Johnson",
+                            role: "High School Student"
+                        },
+                        {
+                            quote: "The personalized learning recommendations helped me improve my grades in subjects I struggled with.",
+                            author: "Maria Garcia",
+                            role: "College Student"
+                        }
+                    ],
+                    image: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+                },
+                'parents': {
+                    title: 'For Parents',
+                    icon: 'fas fa-users',
+                    description: 'Stay connected and engaged with your child\'s educational journey through NeuroVerse\'s parent portal.',
+                    benefits: [
+                        'Real-time updates on your child\'s progress',
+                        'Direct communication with teachers',
+                        'Access to attendance records and grades',
+                        'Event calendars and reminders',
+                        'Resources to support learning at home',
+                        'Insights into your child\'s strengths and areas for improvement'
+                    ],
+                    testimonials: [
+                        {
+                            quote: "As a working parent, I love getting real-time updates about my children's progress. NeuroVerse keeps me connected to their education like never before.",
+                            author: "Michael Chen",
+                            role: "Parent of Two"
+                        },
+                        {
+                            quote: "The parent portal has made it so much easier to stay involved in my daughter's education. I can see her assignments and grades instantly.",
+                            author: "Sarah Williams",
+                            role: "Parent"
+                        }
+                    ],
+                    image: 'https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+                },
+                'teachers': {
+                    title: 'For Teachers',
+                    icon: 'fas fa-chalkboard-teacher',
+                    description: 'Save time on administrative tasks and better focus on teaching with our streamlined tools.',
+                    benefits: [
+                        'Automated grading and assessment tools',
+                        'Easy creation and distribution of assignments',
+                        'Comprehensive student performance analytics',
+                        'Collaboration tools for lesson planning',
+                        'Resource library with educational materials',
+                        'Communication tools for parent engagement'
+                    ],
+                    testimonials: [
+                        {
+                            quote: "The administrative time I've saved with NeuroVerse allows me to focus more on teaching and less on paperwork. It's a game-changer for educators.",
+                            author: "Emily Rodriguez",
+                            role: "High School Teacher"
+                        },
+                        {
+                            quote: "NeuroVerse has transformed how I manage my classroom. The analytics help me identify students who need extra support before they fall behind.",
+                            author: "David Kim",
+                            role: "Middle School Teacher"
+                        }
+                    ],
+                    image: 'https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+                },
+                'schools': {
+                    title: 'For Schools',
+                    icon: 'fas fa-school',
+                    description: 'Modernize your institution\'s image and achieve more efficient management with our comprehensive platform.',
+                    benefits: [
+                        'Streamlined administrative processes',
+                        'Centralized student information management',
+                        'Improved communication between all stakeholders',
+                        'Data-driven decision making',
+                        'Enhanced school reputation through technology adoption',
+                        'Cost-effective solutions for educational needs'
+                    ],
+                    testimonials: [
+                        {
+                            quote: "NeuroVerse has transformed how our school operates. The efficiency gains have been remarkable, and parents are more engaged than ever before.",
+                            author: "Dr. Sarah Johnson",
+                            role: "School Principal"
+                        },
+                        {
+                            quote: "Implementing NeuroVerse has helped us modernize our approach to education while reducing administrative overhead by 30%.",
+                            author: "Robert Thompson",
+                            role: "School Superintendent"
+                        }
+                    ],
+                    image: 'https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+                }
+            };
+            
+            // Plan details data
+            const planDetails = {
+                'school': {
+                    title: 'School Plan',
+                    price: '₹299/month',
+                    description: 'Comprehensive school management platform designed for educational institutions of all sizes.',
+                    features: [
+                        'Up to 500 students',
+                        'Complete administrative tools',
+                        'Teacher management system',
+                        'Parent communication portal',
+                        'Basic analytics & reporting',
+                        'Email support',
+                        'Mobile app access',
+                        'Data security and backup',
+                        'Integration with existing systems'
+                    ],
+                    addOns: [
+                        { name: 'Additional Students (per 100)', price: '₹4,150/month' },
+                        { name: 'Advanced Analytics Package', price: '₹8,290/month' },
+                        { name: 'Priority Support', price: '₹12,435/month' },
+                        { name: 'Custom Integration', price: 'Custom Quote' }
+                    ],
+                    image: 'https://images.unsplash.com/photo-1588072432836-e10032774350?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+                },
+                'parent': {
+                    title: 'Parent Plan',
+                    price: '₹829/month',
+                    description: 'Stay connected to your child\'s education with our comprehensive parent portal.',
+                    features: [
+                        'Real-time progress updates',
+                        'Direct teacher communication',
+                        'Event calendar & reminders',
+                        'Access to learning resources',
+                        'Attendance tracking',
+                        'Mobile app access',
+                        'Multiple child support',
+                        'Progress reports',
+                        'Homework assignments and due dates'
+                    ],
+                    addOns: [
+                        { name: 'Advanced Analytics', price: '₹415/month' },
+                        { name: 'Tutoring Marketplace Access', price: '₹1,660/month' },
+                        { name: 'Premium Content Library', price: '₹829/month' }
+                    ],
+                    image: 'https://images.unsplash.com/photo-1581833971358-2c8b550f87b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+                }
+            };
+            
+            // Initialize modals
+            const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+            const signupModal = new bootstrap.Modal(document.getElementById('signupModal'));
+            const profileModal = new bootstrap.Modal(document.getElementById('profileModal'));
+            const settingsModal = new bootstrap.Modal(document.getElementById('settingsModal'));
+            const deactivateModal = new bootstrap.Modal(document.getElementById('deactivateModal'));
+            const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+            const featureModal = new bootstrap.Modal(document.getElementById('featureModal'));
+            const revenueModal = new bootstrap.Modal(document.getElementById('revenueModal'));
+            const impactModal = new bootstrap.Modal(document.getElementById('impactModal'));
+            const planModal = new bootstrap.Modal(document.getElementById('planModal'));
+            
+            // Navbar scroll effect
+            window.addEventListener('scroll', function() {
+                const navbar = document.querySelector('.navbar');
+                if (window.scrollY > 50) {
+                    navbar.style.padding = '10px 0';
+                    navbar.style.backgroundColor = 'rgba(10, 14, 26, 0.95)';
+                } else {
+                    navbar.style.padding = '15px 0';
+                    navbar.style.backgroundColor = 'rgba(10, 14, 26, 0.8)';
+                }
+            });
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        window.scrollTo({
+                            top: target.offsetTop - 70,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Login/Signup button handlers
+            document.getElementById('loginBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                loginModal.show();
+            });
+            
+            document.getElementById('signupBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                signupModal.show();
+            });
+            
+            // Modal switching
+            document.getElementById('switchToSignup').addEventListener('click', function(e) {
+                e.preventDefault();
+                loginModal.hide();
+                setTimeout(() => signupModal.show(), 300);
+            });
+            
+            document.getElementById('switchToLogin').addEventListener('click', function(e) {
+                e.preventDefault();
+                signupModal.hide();
+                setTimeout(() => loginModal.show(), 300);
+            });
+            
+            // Login form submission
+            document.getElementById('loginForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                // Simulate login process
+                if (email && password) {
+                    // Create user object
+                    currentUser = {
+                        name: email.split('@')[0].charAt(0).toUpperCase() + email.split('@')[0].slice(1),
+                        email: email,
+                        type: 'user'
+                    };
+                    
+                    // Initialize user profile
+                    userProfile = {
+                        name: currentUser.name,
+                        email: currentUser.email,
+                        type: currentUser.type,
+                        phone: '',
+                        location: '',
+                        bio: '',
+                        memberSince: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+                        accountType: 'Free',
+                        coursesCompleted: Math.floor(Math.random() * 10),
+                        achievementsUnlocked: Math.floor(Math.random() * 5),
+                        studyHours: Math.floor(Math.random() * 50)
+                    };
+                    
+                    // Update UI
+                    isLoggedIn = true;
+                    updateAuthUI();
+                    
+                    // Close modal
+                    loginModal.hide();
+                    
+                    // Show success message
+                    showNotification('Login successful! Welcome back, ' + currentUser.name + '!', 'success');
+                    
+                    // Reset form
+                    this.reset();
+                }
+            });
+            
+            // Signup form submission
+            document.getElementById('signupForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('signupName').value;
+                const email = document.getElementById('signupEmail').value;
+                const password = document.getElementById('signupPassword').value;
+                const userType = document.getElementById('signupUserType').value;
+                const agreeTerms = document.getElementById('agreeTerms').checked;
+                
+                // Simulate signup process
+                if (name && email && password && userType && agreeTerms) {
+                    // Create user object
+                    currentUser = {
+                        name: name,
+                        email: email,
+                        type: userType
+                    };
+                    
+                    // Initialize user profile
+                    userProfile = {
+                        name: currentUser.name,
+                        email: currentUser.email,
+                        type: currentUser.type,
+                        phone: '',
+                        location: '',
+                        bio: '',
+                        memberSince: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
+                        accountType: 'Free',
+                        coursesCompleted: 0,
+                        achievementsUnlocked: 0,
+                        studyHours: 0
+                    };
+                    
+                    // Update UI
+                    isLoggedIn = true;
+                    updateAuthUI();
+                    
+                    // Close modal
+                    signupModal.hide();
+                    
+                    // Show success message
+                    showNotification('Account created successfully! Welcome to NeuroVerse, ' + name + '!', 'success');
+                    
+                    // Reset form
+                    this.reset();
+                }
+            });
+            
+            // Update authentication UI
+            function updateAuthUI() {
+                const authButtons = document.querySelector('.navbar .d-flex.ms-3');
+                
+                if (isLoggedIn) {
+                    // Hide login/signup buttons
+                    authButtons.innerHTML = `
+                        <div class="dropdown">
+                            <button class="btn btn-outline-primary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user-circle me-2"></i> ${currentUser.name}
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="#" id="profileMenuItem"><i class="fas fa-user me-2"></i> My Profile</a></li>
+                                <li><a class="dropdown-item" href="#" id="settingsMenuItem"><i class="fas fa-cog me-2"></i> Settings</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#" id="logoutBtn"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+                            </ul>
+                        </div>
+                    `;
+                    
+                    // Add event listeners for menu items
+                    document.getElementById('profileMenuItem').addEventListener('click', function(e) {
+                        e.preventDefault();
+                        showProfileModal();
+                    });
+                    
+                    document.getElementById('settingsMenuItem').addEventListener('click', function(e) {
+                        e.preventDefault();
+                        showSettingsModal();
+                    });
+                    
+                    // Add logout functionality
+                    document.getElementById('logoutBtn').addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        // Reset user state
+                        isLoggedIn = false;
+                        currentUser = null;
+                        
+                        // Update UI
+                        updateAuthUI();
+                        
+                        // Show notification
+                        showNotification('You have been logged out successfully.', 'info');
+                    });
+                } else {
+                    // Show login/signup buttons
+                    authButtons.innerHTML = `
+                        <a href="#" class="btn btn-outline-primary" id="loginBtn">Sign In</a>
+                        <a href="#" class="btn btn-primary ms-2" id="signupBtn">Get Started</a>
+                    `;
+                    
+                    // Re-add event listeners
+                    document.getElementById('loginBtn').addEventListener('click', function(e) {
+                        e.preventDefault();
+                        loginModal.show();
+                    });
+                    
+                    document.getElementById('signupBtn').addEventListener('click', function(e) {
+                        e.preventDefault();
+                        signupModal.show();
+                    });
+                }
+            }
+            
+            // Show profile modal
+            function showProfileModal() {
+                // Update profile header
+                document.getElementById('profileName').textContent = userProfile.name;
+                document.getElementById('profileEmail').textContent = userProfile.email;
+                document.getElementById('profileType').textContent = userProfile.type.charAt(0).toUpperCase() + userProfile.type.slice(1);
+                document.getElementById('profileAvatar').textContent = userProfile.name.charAt(0).toUpperCase();
+                
+                // Update profile stats
+                document.getElementById('coursesCompleted').textContent = userProfile.coursesCompleted;
+                document.getElementById('achievementsUnlocked').textContent = userProfile.achievementsUnlocked;
+                document.getElementById('studyHours').textContent = userProfile.studyHours;
+                
+                // Update overview tab
+                document.getElementById('overviewName').textContent = userProfile.name;
+                document.getElementById('overviewEmail').textContent = userProfile.email;
+                document.getElementById('overviewType').textContent = userProfile.type.charAt(0).toUpperCase() + userProfile.type.slice(1);
+                document.getElementById('overviewMemberSince').textContent = userProfile.memberSince;
+                document.getElementById('overviewSubscription').textContent = userProfile.accountType;
+                document.getElementById('overviewLastLogin').textContent = 'Today';
+                
+                // Update edit form
+                document.getElementById('editName').value = userProfile.name;
+                document.getElementById('editEmail').value = userProfile.email;
+                document.getElementById('editPhone').value = userProfile.phone;
+                document.getElementById('editLocation').value = userProfile.location;
+                document.getElementById('editBio').value = userProfile.bio;
+                
+                // Show modal
+                profileModal.show();
+            }
+            
+            // Show settings modal
+            function showSettingsModal() {
+                // Populate profile tab
+                document.getElementById('profileName').value = userProfile.name;
+                document.getElementById('profileEmail').value = userProfile.email;
+                document.getElementById('profileType').value = userProfile.type;
+                document.getElementById('profilePhone').value = userProfile.phone;
+                document.getElementById('profileBio').value = userProfile.bio;
+                
+                // Populate account tab
+                document.getElementById('memberSince').textContent = userProfile.memberSince;
+                document.getElementById('accountType').textContent = userProfile.accountType;
+                document.getElementById('lastLogin').textContent = 'Today';
+                
+                // Populate notifications tab
+                document.getElementById('emailUpdates').checked = userSettings.emailUpdates;
+                document.getElementById('courseUpdates').checked = userSettings.courseUpdates;
+                document.getElementById('progressReports').checked = userSettings.progressReports;
+                document.getElementById('promotional').checked = userSettings.promotional;
+                document.getElementById('pushNotifications').checked = userSettings.pushNotifications;
+                document.getElementById('assignmentReminders').checked = userSettings.assignmentReminders;
+                document.getElementById('messageAlerts').checked = userSettings.messageAlerts;
+                
+                // Show modal
+                settingsModal.show();
+            }
+            
+            // Edit profile form submission
+            document.getElementById('editProfileForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Update user profile data
+                userProfile.name = document.getElementById('editName').value;
+                userProfile.email = document.getElementById('editEmail').value;
+                userProfile.phone = document.getElementById('editPhone').value;
+                userProfile.location = document.getElementById('editLocation').value;
+                userProfile.bio = document.getElementById('editBio').value;
+                
+                // Update current user data
+                currentUser.name = userProfile.name;
+                currentUser.email = userProfile.email;
+                
+                // Update UI
+                updateAuthUI();
+                
+                // Update profile modal content
+                document.getElementById('profileName').textContent = userProfile.name;
+                document.getElementById('profileEmail').textContent = userProfile.email;
+                document.getElementById('overviewName').textContent = userProfile.name;
+                document.getElementById('overviewEmail').textContent = userProfile.email;
+                document.getElementById('profileAvatar').textContent = userProfile.name.charAt(0).toUpperCase();
+                
+                // Show success message
+                showNotification('Profile updated successfully!', 'success');
+                
+                // Switch back to overview tab
+                const overviewTab = new bootstrap.Tab(document.getElementById('overview-tab'));
+                overviewTab.show();
+            });
+            
+            // Profile form submission in settings
+            document.getElementById('profileForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Update user data
+                userProfile.name = document.getElementById('profileName').value;
+                userProfile.email = document.getElementById('profileEmail').value;
+                userProfile.phone = document.getElementById('profilePhone').value;
+                userProfile.bio = document.getElementById('profileBio').value;
+                
+                // Update current user data
+                currentUser.name = userProfile.name;
+                currentUser.email = userProfile.email;
+                
+                // Update UI
+                updateAuthUI();
+                
+                // Close modal
+                settingsModal.hide();
+                
+                // Show success message
+                showNotification('Profile updated successfully!', 'success');
+            });
+            
+            // Security form submission
+            document.getElementById('securityForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const currentPassword = document.getElementById('currentPassword').value;
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                
+                if (newPassword !== confirmPassword) {
+                    showNotification('New passwords do not match!', 'danger');
+                    return;
+                }
+                
+                // Close modal
+                settingsModal.hide();
+                
+                // Show success message
+                showNotification('Password updated successfully!', 'success');
+                
+                // Reset form
+                this.reset();
+            });
+            
+            // Notifications form submission
+            document.getElementById('notificationsForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Update user settings
+                userSettings.emailUpdates = document.getElementById('emailUpdates').checked;
+                userSettings.courseUpdates = document.getElementById('courseUpdates').checked;
+                userSettings.progressReports = document.getElementById('progressReports').checked;
+                userSettings.promotional = document.getElementById('promotional').checked;
+                userSettings.pushNotifications = document.getElementById('pushNotifications').checked;
+                userSettings.assignmentReminders = document.getElementById('assignmentReminders').checked;
+                userSettings.messageAlerts = document.getElementById('messageAlerts').checked;
+                
+                // Close modal
+                settingsModal.hide();
+                
+                // Show success message
+                showNotification('Notification preferences saved!', 'success');
+            });
+            
+            // Deactivate account
+            document.getElementById('deactivateAccountBtn').addEventListener('click', function() {
+                const confirmDeactivate = document.getElementById('confirmDeactivate').checked;
+                
+                if (!confirmDeactivate) {
+                    showNotification('Please confirm that you want to deactivate your account.', 'warning');
+                    return;
+                }
+                
+                // Close modals
+                deactivateModal.hide();
+                settingsModal.hide();
+                
+                // Reset user state
+                isLoggedIn = false;
+                currentUser = null;
+                
+                // Update UI
+                updateAuthUI();
+                
+                // Show success message
+                showNotification('Your account has been deactivated. You can reactivate it at any time by logging back in.', 'info');
+            });
+            
+            // Delete account
+            document.getElementById('deleteAccountBtn').addEventListener('click', function() {
+                const deleteConfirm = document.getElementById('deleteConfirm').value;
+                const confirmDelete = document.getElementById('confirmDelete').checked;
+                
+                if (deleteConfirm !== 'DELETE') {
+                    showNotification('Please type DELETE to confirm account deletion.', 'warning');
+                    return;
+                }
+                
+                if (!confirmDelete) {
+                    showNotification('Please confirm that you understand this action is irreversible.', 'warning');
+                    return;
+                }
+                
+                // Close modals
+                deleteModal.hide();
+                settingsModal.hide();
+                
+                // Reset user state
+                isLoggedIn = false;
+                currentUser = null;
+                
+                // Update UI
+                updateAuthUI();
+                
+                // Show success message
+                showNotification('Your account has been permanently deleted.', 'info');
+            });
+            
+            // Feature card click handlers
+            document.querySelectorAll('.feature-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const featureKey = this.getAttribute('data-feature');
+                    if (featureKey && featureDetails[featureKey]) {
+                        showFeatureDetails(featureKey);
+                    }
+                });
+            });
+            
+            // Revenue card click handlers
+            document.querySelectorAll('.revenue-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const revenueKey = this.getAttribute('data-revenue');
+                    if (revenueKey && revenueDetails[revenueKey]) {
+                        showRevenueDetails(revenueKey);
+                    }
+                });
+            });
+            
+            // Impact card click handlers
+            document.querySelectorAll('.impact-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const impactKey = this.getAttribute('data-impact');
+                    if (impactKey && impactDetails[impactKey]) {
+                        showImpactDetails(impactKey);
+                    }
+                });
+            });
+            
+            // Plan button click handlers
+            document.querySelectorAll('.plan-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const planKey = this.getAttribute('data-plan');
+                    if (planKey && planDetails[planKey]) {
+                        showPlanDetails(planKey);
+                    }
+                });
+            });
+            
+            // Show feature details in modal
+            function showFeatureDetails(featureKey) {
+                const feature = featureDetails[featureKey];
+                if (!feature) return;
+                
+                const content = document.getElementById('featureModalContent');
+                content.innerHTML = `
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="${feature.image}" alt="${feature.title}" class="img-fluid rounded-3 mb-3">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="feature-icon me-3">
+                                    <i class="${feature.icon}"></i>
+                                </div>
+                                <h4>${feature.title}</h4>
+                            </div>
+                            <p>${feature.description}</p>
+                            <h5 class="mt-4">Key Benefits:</h5>
+                            <ul>
+                                ${feature.benefits.map(benefit => `<li>${benefit}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('featureModalLabel').textContent = feature.title;
+                document.getElementById('tryFeatureBtn').onclick = function() {
+                    featureModal.hide();
+                    if (!isLoggedIn) {
+                        showNotification('Please sign up or log in to try this feature', 'info');
+                        signupModal.show();
+                    } else {
+                        showNotification(`Redirecting to ${feature.title}...`, 'success');
+                    }
+                };
+                
+                featureModal.show();
+            }
+            
+            // Show revenue details in modal
+            function showRevenueDetails(revenueKey) {
+                const revenue = revenueDetails[revenueKey];
+                if (!revenue) return;
+                
+                const content = document.getElementById('revenueModalContent');
+                content.innerHTML = `
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="${revenue.image}" alt="${revenue.title}" class="img-fluid rounded-3 mb-3">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="revenue-icon me-3">
+                                    <i class="${revenue.icon}"></i>
+                                </div>
+                                <h4>${revenue.title}</h4>
+                            </div>
+                            <p>${revenue.description}</p>
+                            <h5 class="mt-4">Key Details:</h5>
+                            <ul>
+                                ${revenue.details.map(detail => `<li>${detail}</li>`).join('')}
+                            </ul>
+                            <h5 class="mt-4">Performance Metrics:</h5>
+                            <div class="row">
+                                ${revenue.stats.map(stat => `
+                                    <div class="col-6">
+                                        <div class="text-center p-2">
+                                            <div class="h5">${stat.value}</div>
+                                            <div class="small">${stat.label}</div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('revenueModalLabel').textContent = revenue.title;
+                document.getElementById('learnMoreRevenueBtn').onclick = function() {
+                    revenueModal.hide();
+                    showNotification('Opening detailed documentation...', 'info');
+                };
+                
+                revenueModal.show();
+            }
+            
+            // Show impact details in modal
+            function showImpactDetails(impactKey) {
+                const impact = impactDetails[impactKey];
+                if (!impact) return;
+                
+                const content = document.getElementById('impactModalContent');
+                content.innerHTML = `
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="${impact.image}" alt="${impact.title}" class="img-fluid rounded-3 mb-3">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="impact-icon ${impactKey} me-3">
+                                    <i class="${impact.icon}"></i>
+                                </div>
+                                <h4>${impact.title}</h4>
+                            </div>
+                            <p>${impact.description}</p>
+                            <h5 class="mt-4">Key Benefits:</h5>
+                            <ul>
+                                ${impact.benefits.map(benefit => `<li>${benefit}</li>`).join('')}
+                            </ul>
+                            <h5 class="mt-4">Testimonials:</h5>
+                            ${impact.testimonials.map(testimonial => `
+                                <div class="card bg-transparent border-secondary mb-3">
+                                    <div class="card-body">
+                                        <p class="card-text fst-italic">"${testimonial.quote}"</p>
+                                        <footer class="blockquote-footer mt-0">${testimonial.author}, <cite title="Source Title">${testimonial.role}</cite></footer>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('impactModalLabel').textContent = impact.title;
+                document.getElementById('getStartedImpactBtn').onclick = function() {
+                    impactModal.hide();
+                    if (!isLoggedIn) {
+                        showNotification('Please sign up or log in to get started', 'info');
+                        signupModal.show();
+                    } else {
+                        showNotification(`Setting up ${impact.title} experience...`, 'success');
+                    }
+                };
+                
+                impactModal.show();
+            }
+            
+            // Show plan details in modal
+            function showPlanDetails(planKey) {
+                const plan = planDetails[planKey];
+                if (!plan) return;
+                
+                const content = document.getElementById('planModalContent');
+                content.innerHTML = `
+                    <div class="row">
+                        <div class="col-md-6">
+                            <img src="${plan.image}" alt="${plan.title}" class="img-fluid rounded-3 mb-3">
+                            <div class="text-center">
+                                <div class="h3">${plan.price}</div>
+                                <p>${plan.description}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <h4>${plan.title}</h4>
+                            <h5 class="mt-4">Features Included:</h5>
+                            <ul>
+                                ${plan.features.map(feature => `<li><i class="fas fa-check-circle text-success me-2"></i>${feature}</li>`).join('')}
+                            </ul>
+                            <h5 class="mt-4">Available Add-ons:</h5>
+                            <ul>
+                                ${plan.addOns.map(addOn => `<li>${addOn.name} - ${addOn.price}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                `;
+                
+                document.getElementById('planModalLabel').textContent = plan.title;
+                document.getElementById('subscribePlanBtn').onclick = function() {
+                    planModal.hide();
+                    if (!isLoggedIn) {
+                        showNotification('Please sign up or log in to subscribe', 'info');
+                        signupModal.show();
+                    } else {
+                        showNotification(`Processing subscription to ${plan.title}...`, 'success');
+                    }
+                };
+                
+                planModal.show();
+            }
+            
+            // Contact form submission
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const name = document.getElementById('contactName').value;
+                const email = document.getElementById('contactEmail').value;
+                const subject = document.getElementById('contactSubject').value;
+                const userType = document.getElementById('contactUserType').value;
+                const message = document.getElementById('contactMessage').value;
+                
+                // Simulate form submission
+                if (name && email && message) {
+                    // Show success message
+                    showNotification('Thank you for your message! We will get back to you soon.', 'success');
+                    
+                    // Reset form
+                    this.reset();
+                } else {
+                    // Show error message
+                    showNotification('Please fill in all required fields.', 'error');
+                }
+            });
+            
+            // Show notification
+            function showNotification(message, type = 'info') {
+                // Create notification element
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.textContent = message;
+                
+                // Add to DOM
+                document.body.appendChild(notification);
+                
+                // Show notification
+                setTimeout(() => {
+                    notification.classList.add('show');
+                }, 10);
+                
+                // Auto remove after 5 seconds
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    setTimeout(() => {
+                        notification.remove();
+                    }, 300);
+                }, 5000);
+            }
+            
+            // Intersection Observer for animations
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe elements for animation
+            document.querySelectorAll('.roadmap-item, .testimonial-card').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
