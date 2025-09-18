@@ -38,6 +38,7 @@
             --input-focus-bg: rgba(255, 255, 255, 0.1);
             --input-focus-border: var(--primary-color);
             --input-focus-shadow: rgba(67, 97, 238, 0.1);
+            --input-placeholder-color: rgba(255, 255, 255, 0.7); /* Changed to white with opacity for dark mode */
             --btn-primary-bg: linear-gradient(135deg, var(--primary-color) 0%, var(--bitcoin-color) 100%);
             --btn-primary-hover-shadow: rgba(67, 97, 238, 0.3);
             --btn-outline-primary-border: var(--primary-color);
@@ -81,6 +82,7 @@
             --input-focus-bg: #ffffff;
             --input-focus-border: var(--primary-color);
             --input-focus-shadow: rgba(67, 97, 238, 0.1);
+            --input-placeholder-color: rgba(0, 0, 0, 0.5);
             --btn-primary-bg: linear-gradient(135deg, var(--primary-color) 0%, var(--bitcoin-color) 100%);
             --btn-primary-hover-shadow: rgba(67, 97, 238, 0.3);
             --btn-outline-primary-border: var(--primary-color);
@@ -207,6 +209,15 @@
             background-color: var(--btn-outline-primary-hover-bg);
             color: white;
             transform: translateY(-2px);
+        }
+
+        /* User Profile Image in Navbar */
+        .user-profile-img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 8px;
         }
 
         /* Hero Section */
@@ -762,12 +773,9 @@
             color: var(--text-color);
         }
 
+        /* Fixed placeholder text color for dark mode */
         .form-control::placeholder {
-            color: rgba(0, 0, 0, 0.3);
-        }
-
-        body.light-theme .form-control::placeholder {
-            color: rgba(0, 0, 0, 0.5);
+            color: var(--input-placeholder-color) !important;
         }
 
         .form-label {
@@ -971,6 +979,11 @@
             margin-bottom: 30px;
         }
 
+        .profile-avatar-container {
+            position: relative;
+            margin-right: 20px;
+        }
+
         .profile-avatar {
             width: 100px;
             height: 100px;
@@ -982,8 +995,15 @@
             justify-content: center;
             font-weight: 600;
             font-size: 2rem;
-            margin-right: 20px;
+            overflow: hidden;
             position: relative;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
         }
 
         .profile-avatar-upload {
@@ -1001,6 +1021,7 @@
             font-size: 0.8rem;
             cursor: pointer;
             transition: all 0.3s ease;
+            border: 2px solid var(--modal-bg);
         }
 
         .profile-avatar-upload:hover {
@@ -1108,6 +1129,65 @@
 
         .profile-form .form-check-label {
             padding-left: 0.5rem;
+        }
+
+        /* Profile Photo Upload Section */
+        .profile-photo-section {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-photo-preview {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            overflow: hidden;
+            border: 4px solid var(--primary-color);
+            position: relative;
+            background-color: var(--card-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-photo-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-photo-preview .placeholder-icon {
+            font-size: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .profile-photo-upload-btn {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+        }
+
+        .profile-photo-upload-btn input[type=file] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+        }
+
+        .remove-photo-btn {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: var(--notification-error);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .remove-photo-btn:hover {
+            text-decoration: underline;
         }
 
         /* Settings Modal Styles */
@@ -1868,10 +1948,15 @@
                 </div>
                 <div class="modal-body">
                     <div class="profile-header">
-                        <div class="profile-avatar" id="profileAvatar">
-                            U
-                            <div class="profile-avatar-upload">
+                        <div class="profile-avatar-container">
+                            <div class="profile-avatar" id="profileAvatar">
+                                <div class="placeholder-icon">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                            </div>
+                            <div class="profile-avatar-upload" id="profileAvatarUpload">
                                 <i class="fas fa-camera"></i>
+                                <input type="file" id="profilePhotoInput" accept="image/*">
                             </div>
                         </div>
                         <div class="profile-info">
@@ -1903,6 +1988,9 @@
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="edit-tab" data-bs-toggle="tab" data-bs-target="#edit" type="button" role="tab" aria-controls="edit" aria-selected="false">Edit Profile</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="photo-tab" data-bs-toggle="tab" data-bs-target="#photo" type="button" role="tab" aria-controls="photo" aria-selected="false">Profile Photo</button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="achievements-tab" data-bs-toggle="tab" data-bs-target="#achievements" type="button" role="tab" aria-controls="achievements" aria-selected="false">Achievements</button>
@@ -1969,11 +2057,35 @@
                                 </form>
                             </div>
                             
+                            <!-- Profile Photo Tab -->
+                            <div class="tab-pane fade" id="photo" role="tabpanel" aria-labelledby="photo-tab">
+                                <div class="profile-photo-section">
+                                    <div class="profile-photo-preview" id="profilePhotoPreview">
+                                        <div class="placeholder-icon">
+                                            <i class="fas fa-user"></i>
+                                        </div>
+                                    </div>
+                                    <div class="profile-photo-upload-btn">
+                                        <button class="btn btn-primary">
+                                            <i class="fas fa-upload me-2"></i>Upload Photo
+                                        </button>
+                                        <input type="file" id="profilePhotoUploadInput" accept="image/*">
+                                    </div>
+                                    <div class="remove-photo-btn" id="removePhotoBtn" style="display: none;">
+                                        <i class="fas fa-trash me-1"></i>Remove Photo
+                                    </div>
+                                </div>
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    Upload a JPG, PNG or GIF image. Maximum file size is 5MB.
+                                </div>
+                            </div>
+                            
                             <!-- Achievements Tab -->
                             <div class="tab-pane fade" id="achievements" role="tabpanel" aria-labelledby="achievements-tab">
                                 <div id="achievementsList">
-                                    <div class="achievement-item">
-                                        <div class="achievement-icon">
+                                    <div class="achievement-item d-flex align-items-center mb-3">
+                                        <div class="achievement-icon me-3">
                                             <i class="fas fa-star"></i>
                                         </div>
                                         <div class="achievement-details">
@@ -1981,8 +2093,8 @@
                                             <p>Completed your first course</p>
                                         </div>
                                     </div>
-                                    <div class="achievement-item">
-                                        <div class="achievement-icon">
+                                    <div class="achievement-item d-flex align-items-center mb-3">
+                                        <div class="achievement-icon me-3">
                                             <i class="fas fa-fire"></i>
                                         </div>
                                         <div class="achievement-details">
@@ -1990,8 +2102,8 @@
                                             <p>7-day learning streak</p>
                                         </div>
                                     </div>
-                                    <div class="achievement-item">
-                                        <div class="achievement-icon">
+                                    <div class="achievement-item d-flex align-items-center mb-3">
+                                        <div class="achievement-icon me-3">
                                             <i class="fas fa-trophy"></i>
                                         </div>
                                         <div class="achievement-details">
@@ -2410,7 +2522,8 @@
                 accountType: 'Free',
                 coursesCompleted: 0,
                 achievementsUnlocked: 0,
-                studyHours: 0
+                studyHours: 0,
+                profilePhoto: null
             };
             
             // Feature details data
@@ -2862,7 +2975,8 @@
                         accountType: 'Free',
                         coursesCompleted: Math.floor(Math.random() * 10),
                         achievementsUnlocked: Math.floor(Math.random() * 5),
-                        studyHours: Math.floor(Math.random() * 50)
+                        studyHours: Math.floor(Math.random() * 50),
+                        profilePhoto: localStorage.getItem('profilePhoto') || null
                     };
                     
                     // Update UI
@@ -2911,7 +3025,8 @@
                         accountType: 'Free',
                         coursesCompleted: 0,
                         achievementsUnlocked: 0,
-                        studyHours: 0
+                        studyHours: 0,
+                        profilePhoto: null
                     };
                     
                     // Update UI
@@ -2935,12 +3050,17 @@
                 
                 if (isLoggedIn) {
                     // Hide login/signup buttons
+                    const profileImage = userProfile.profilePhoto 
+                        ? `<img src="${userProfile.profilePhoto}" alt="Profile" class="user-profile-img">`
+                        : '';
+                    
                     authButtons.innerHTML = `
                         <button class="theme-toggle" id="themeToggle" title="Toggle theme">
                             <i class="fas fa-moon"></i>
                         </button>
                         <div class="dropdown">
                             <button class="btn btn-outline-primary dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                ${profileImage}
                                 <i class="fas fa-user-circle me-2"></i> ${currentUser.name}
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
@@ -3048,7 +3168,18 @@
                 document.getElementById('profileName').textContent = userProfile.name;
                 document.getElementById('profileEmail').textContent = userProfile.email;
                 document.getElementById('profileType').textContent = userProfile.type.charAt(0).toUpperCase() + userProfile.type.slice(1);
-                document.getElementById('profileAvatar').textContent = userProfile.name.charAt(0).toUpperCase();
+                
+                // Update profile avatar
+                const profileAvatar = document.getElementById('profileAvatar');
+                if (userProfile.profilePhoto) {
+                    profileAvatar.innerHTML = `<img src="${userProfile.profilePhoto}" alt="Profile">`;
+                } else {
+                    profileAvatar.innerHTML = `
+                        <div class="placeholder-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    `;
+                }
                 
                 // Update profile stats
                 document.getElementById('coursesCompleted').textContent = userProfile.coursesCompleted;
@@ -3063,12 +3194,26 @@
                 document.getElementById('overviewSubscription').textContent = userProfile.accountType;
                 document.getElementById('overviewLastLogin').textContent = 'Today';
                 
-                // Update edit form
+                // Update edit profile form
                 document.getElementById('editName').value = userProfile.name;
                 document.getElementById('editEmail').value = userProfile.email;
                 document.getElementById('editPhone').value = userProfile.phone;
                 document.getElementById('editLocation').value = userProfile.location;
                 document.getElementById('editBio').value = userProfile.bio;
+                
+                // Update profile photo tab
+                const profilePhotoPreview = document.getElementById('profilePhotoPreview');
+                if (userProfile.profilePhoto) {
+                    profilePhotoPreview.innerHTML = `<img src="${userProfile.profilePhoto}" alt="Profile Photo">`;
+                    document.getElementById('removePhotoBtn').style.display = 'block';
+                } else {
+                    profilePhotoPreview.innerHTML = `
+                        <div class="placeholder-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    `;
+                    document.getElementById('removePhotoBtn').style.display = 'none';
+                }
                 
                 // Show modal
                 profileModal.show();
@@ -3076,19 +3221,19 @@
             
             // Show settings modal
             function showSettingsModal() {
-                // Populate profile tab
+                // Update profile form
                 document.getElementById('profileName').value = userProfile.name;
                 document.getElementById('profileEmail').value = userProfile.email;
-                document.getElementById('profileType').value = userProfile.type;
                 document.getElementById('profilePhone').value = userProfile.phone;
                 document.getElementById('profileBio').value = userProfile.bio;
+                document.getElementById('profileType').value = userProfile.type;
                 
-                // Populate account tab
+                // Update account information
                 document.getElementById('memberSince').textContent = userProfile.memberSince;
                 document.getElementById('accountType').textContent = userProfile.accountType;
                 document.getElementById('lastLogin').textContent = 'Today';
                 
-                // Populate notifications tab
+                // Update notification preferences
                 document.getElementById('emailUpdates').checked = userSettings.emailUpdates;
                 document.getElementById('courseUpdates').checked = userSettings.courseUpdates;
                 document.getElementById('progressReports').checked = userSettings.progressReports;
@@ -3097,71 +3242,191 @@
                 document.getElementById('assignmentReminders').checked = userSettings.assignmentReminders;
                 document.getElementById('messageAlerts').checked = userSettings.messageAlerts;
                 
-                // Set theme switch based on current theme
-                if (body.classList.contains('light-theme')) {
-                    document.getElementById('themeSwitch').checked = true;
-                } else {
-                    document.getElementById('themeSwitch').checked = false;
-                }
-                
                 // Show modal
                 settingsModal.show();
             }
+            
+            // Profile photo upload functionality
+            const profilePhotoInput = document.getElementById('profilePhotoInput');
+            const profilePhotoUploadInput = document.getElementById('profilePhotoUploadInput');
+            const profilePhotoPreview = document.getElementById('profilePhotoPreview');
+            const removePhotoBtn = document.getElementById('removePhotoBtn');
+            
+            // Handle profile photo upload from avatar
+            profilePhotoInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                
+                if (file) {
+                    // Check file size (5MB limit)
+                    if (file.size > 5 * 1024 * 1024) {
+                        showNotification('File size exceeds 5MB limit. Please choose a smaller file.', 'error');
+                        return;
+                    }
+                    
+                    // Check file type
+                    if (!file.type.match('image.*')) {
+                        showNotification('Please select an image file (JPG, PNG, or GIF).', 'error');
+                        return;
+                    }
+                    
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        const imageUrl = e.target.result;
+                        
+                        // Update profile avatar
+                        document.getElementById('profileAvatar').innerHTML = `<img src="${imageUrl}" alt="Profile">`;
+                        
+                        // Update profile photo preview
+                        profilePhotoPreview.innerHTML = `<img src="${imageUrl}" alt="Profile Photo">`;
+                        removePhotoBtn.style.display = 'block';
+                        
+                        // Update user profile
+                        userProfile.profilePhoto = imageUrl;
+                        localStorage.setItem('profilePhoto', imageUrl);
+                        
+                        // Update navbar if logged in
+                        if (isLoggedIn) {
+                            updateAuthUI();
+                        }
+                        
+                        showNotification('Profile photo updated successfully!', 'success');
+                    };
+                    
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // Handle profile photo upload from tab
+            profilePhotoUploadInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                
+                if (file) {
+                    // Check file size (5MB limit)
+                    if (file.size > 5 * 1024 * 1024) {
+                        showNotification('File size exceeds 5MB limit. Please choose a smaller file.', 'error');
+                        return;
+                    }
+                    
+                    // Check file type
+                    if (!file.type.match('image.*')) {
+                        showNotification('Please select an image file (JPG, PNG, or GIF).', 'error');
+                        return;
+                    }
+                    
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        const imageUrl = e.target.result;
+                        
+                        // Update profile avatar
+                        document.getElementById('profileAvatar').innerHTML = `<img src="${imageUrl}" alt="Profile">`;
+                        
+                        // Update profile photo preview
+                        profilePhotoPreview.innerHTML = `<img src="${imageUrl}" alt="Profile Photo">`;
+                        removePhotoBtn.style.display = 'block';
+                        
+                        // Update user profile
+                        userProfile.profilePhoto = imageUrl;
+                        localStorage.setItem('profilePhoto', imageUrl);
+                        
+                        // Update navbar if logged in
+                        if (isLoggedIn) {
+                            updateAuthUI();
+                        }
+                        
+                        showNotification('Profile photo updated successfully!', 'success');
+                    };
+                    
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            // Handle remove photo
+            removePhotoBtn.addEventListener('click', function() {
+                // Update profile avatar
+                document.getElementById('profileAvatar').innerHTML = `
+                    <div class="placeholder-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                `;
+                
+                // Update profile photo preview
+                profilePhotoPreview.innerHTML = `
+                    <div class="placeholder-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                `;
+                removePhotoBtn.style.display = 'none';
+                
+                // Update user profile
+                userProfile.profilePhoto = null;
+                localStorage.removeItem('profilePhoto');
+                
+                // Update navbar if logged in
+                if (isLoggedIn) {
+                    updateAuthUI();
+                }
+                
+                // Reset file inputs
+                profilePhotoInput.value = '';
+                profilePhotoUploadInput.value = '';
+                
+                showNotification('Profile photo removed.', 'info');
+            });
             
             // Edit profile form submission
             document.getElementById('editProfileForm').addEventListener('submit', function(e) {
                 e.preventDefault();
                 
-                // Update user profile data
+                // Update user profile
                 userProfile.name = document.getElementById('editName').value;
                 userProfile.email = document.getElementById('editEmail').value;
                 userProfile.phone = document.getElementById('editPhone').value;
                 userProfile.location = document.getElementById('editLocation').value;
                 userProfile.bio = document.getElementById('editBio').value;
                 
-                // Update current user data
-                currentUser.name = userProfile.name;
-                currentUser.email = userProfile.email;
+                // Update current user
+                if (currentUser) {
+                    currentUser.name = userProfile.name;
+                    currentUser.email = userProfile.email;
+                }
                 
                 // Update UI
-                updateAuthUI();
-                
-                // Update profile modal content
                 document.getElementById('profileName').textContent = userProfile.name;
                 document.getElementById('profileEmail').textContent = userProfile.email;
                 document.getElementById('overviewName').textContent = userProfile.name;
                 document.getElementById('overviewEmail').textContent = userProfile.email;
-                document.getElementById('profileAvatar').textContent = userProfile.name.charAt(0).toUpperCase();
                 
-                // Show success message
+                // Update navbar if logged in
+                if (isLoggedIn) {
+                    updateAuthUI();
+                }
+                
                 showNotification('Profile updated successfully!', 'success');
-                
-                // Switch back to overview tab
-                const overviewTab = new bootstrap.Tab(document.getElementById('overview-tab'));
-                overviewTab.show();
             });
             
-            // Profile form submission in settings
+            // Profile form submission
             document.getElementById('profileForm').addEventListener('submit', function(e) {
                 e.preventDefault();
                 
-                // Update user data
+                // Update user profile
                 userProfile.name = document.getElementById('profileName').value;
                 userProfile.email = document.getElementById('profileEmail').value;
                 userProfile.phone = document.getElementById('profilePhone').value;
                 userProfile.bio = document.getElementById('profileBio').value;
                 
-                // Update current user data
-                currentUser.name = userProfile.name;
-                currentUser.email = userProfile.email;
+                // Update current user
+                if (currentUser) {
+                    currentUser.name = userProfile.name;
+                    currentUser.email = userProfile.email;
+                }
                 
-                // Update UI
-                updateAuthUI();
+                // Update navbar if logged in
+                if (isLoggedIn) {
+                    updateAuthUI();
+                }
                 
-                // Close modal
-                settingsModal.hide();
-                
-                // Show success message
                 showNotification('Profile updated successfully!', 'success');
             });
             
@@ -3174,17 +3439,12 @@
                 const confirmPassword = document.getElementById('confirmPassword').value;
                 
                 if (newPassword !== confirmPassword) {
-                    showNotification('New passwords do not match!', 'danger');
+                    showNotification('New passwords do not match.', 'error');
                     return;
                 }
                 
-                // Close modal
-                settingsModal.hide();
-                
-                // Show success message
+                // Simulate password update
                 showNotification('Password updated successfully!', 'success');
-                
-                // Reset form
                 this.reset();
             });
             
@@ -3201,35 +3461,30 @@
                 userSettings.assignmentReminders = document.getElementById('assignmentReminders').checked;
                 userSettings.messageAlerts = document.getElementById('messageAlerts').checked;
                 
-                // Close modal
-                settingsModal.hide();
-                
-                // Show success message
-                showNotification('Notification preferences saved!', 'success');
+                showNotification('Notification preferences saved successfully!', 'success');
             });
             
             // Deactivate account
             document.getElementById('deactivateAccountBtn').addEventListener('click', function() {
                 const confirmDeactivate = document.getElementById('confirmDeactivate').checked;
                 
-                if (!confirmDeactivate) {
-                    showNotification('Please confirm that you want to deactivate your account.', 'warning');
-                    return;
+                if (confirmDeactivate) {
+                    // Simulate account deactivation
+                    showNotification('Your account has been deactivated. You can reactivate it by logging back in.', 'info');
+                    
+                    // Reset user state
+                    isLoggedIn = false;
+                    currentUser = null;
+                    
+                    // Update UI
+                    updateAuthUI();
+                    
+                    // Close modals
+                    deactivateModal.hide();
+                    settingsModal.hide();
+                } else {
+                    showNotification('Please confirm that you understand the consequences of deactivating your account.', 'warning');
                 }
-                
-                // Close modals
-                deactivateModal.hide();
-                settingsModal.hide();
-                
-                // Reset user state
-                isLoggedIn = false;
-                currentUser = null;
-                
-                // Update UI
-                updateAuthUI();
-                
-                // Show success message
-                showNotification('Your account has been deactivated. You can reactivate it at any time by logging back in.', 'info');
             });
             
             // Delete account
@@ -3237,300 +3492,237 @@
                 const deleteConfirm = document.getElementById('deleteConfirm').value;
                 const confirmDelete = document.getElementById('confirmDelete').checked;
                 
-                if (deleteConfirm !== 'DELETE') {
-                    showNotification('Please type DELETE to confirm account deletion.', 'warning');
-                    return;
+                if (deleteConfirm === 'DELETE' && confirmDelete) {
+                    // Simulate account deletion
+                    showNotification('Your account has been permanently deleted. We\'re sorry to see you go.', 'info');
+                    
+                    // Reset user state
+                    isLoggedIn = false;
+                    currentUser = null;
+                    userProfile = {
+                        name: '',
+                        email: '',
+                        type: '',
+                        phone: '',
+                        location: '',
+                        bio: '',
+                        memberSince: '',
+                        accountType: 'Free',
+                        coursesCompleted: 0,
+                        achievementsUnlocked: 0,
+                        studyHours: 0,
+                        profilePhoto: null
+                    };
+                    
+                    // Clear localStorage
+                    localStorage.removeItem('profilePhoto');
+                    
+                    // Update UI
+                    updateAuthUI();
+                    
+                    // Close modals
+                    deleteModal.hide();
+                    settingsModal.hide();
+                } else {
+                    showNotification('Please type DELETE and confirm that you understand the consequences.', 'warning');
                 }
-                
-                if (!confirmDelete) {
-                    showNotification('Please confirm that you understand this action is irreversible.', 'warning');
-                    return;
-                }
-                
-                // Close modals
-                deleteModal.hide();
-                settingsModal.hide();
-                
-                // Reset user state
-                isLoggedIn = false;
-                currentUser = null;
-                
-                // Update UI
-                updateAuthUI();
-                
-                // Show success message
-                showNotification('Your account has been permanently deleted.', 'info');
             });
-            
-            // Feature card click handlers
-            document.querySelectorAll('.feature-card').forEach(card => {
-                card.addEventListener('click', function() {
-                    const featureKey = this.getAttribute('data-feature');
-                    if (featureKey && featureDetails[featureKey]) {
-                        showFeatureDetails(featureKey);
-                    }
-                });
-            });
-            
-            // Revenue card click handlers
-            document.querySelectorAll('.revenue-card').forEach(card => {
-                card.addEventListener('click', function() {
-                    const revenueKey = this.getAttribute('data-revenue');
-                    if (revenueKey && revenueDetails[revenueKey]) {
-                        showRevenueDetails(revenueKey);
-                    }
-                });
-            });
-            
-            // Impact card click handlers
-            document.querySelectorAll('.impact-card').forEach(card => {
-                card.addEventListener('click', function() {
-                    const impactKey = this.getAttribute('data-impact');
-                    if (impactKey && impactDetails[impactKey]) {
-                        showImpactDetails(impactKey);
-                    }
-                });
-            });
-            
-            // Plan button click handlers
-            document.querySelectorAll('.plan-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const planKey = this.getAttribute('data-plan');
-                    if (planKey && planDetails[planKey]) {
-                        showPlanDetails(planKey);
-                    }
-                });
-            });
-            
-            // Show feature details in modal
-            function showFeatureDetails(featureKey) {
-                const feature = featureDetails[featureKey];
-                if (!feature) return;
-                
-                const content = document.getElementById('featureModalContent');
-                content.innerHTML = `
-                    <div class="row">
-                        <div class="col-md-6">
-                            <img src="${feature.image}" alt="${feature.title}" class="img-fluid rounded-3 mb-3">
-                        </div>
-                        <div class="col-md-6">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="feature-icon me-3">
-                                    <i class="${feature.icon}"></i>
-                                </div>
-                                <h4>${feature.title}</h4>
-                            </div>
-                            <p>${feature.description}</p>
-                            <h5 class="mt-4">Key Benefits:</h5>
-                            <ul>
-                                ${feature.benefits.map(benefit => `<li>${benefit}</li>`).join('')}
-                            </ul>
-                        </div>
-                    </div>
-                `;
-                
-                document.getElementById('featureModalLabel').textContent = feature.title;
-                document.getElementById('tryFeatureBtn').onclick = function() {
-                    featureModal.hide();
-                    if (!isLoggedIn) {
-                        showNotification('Please sign up or log in to try this feature', 'info');
-                        signupModal.show();
-                    } else {
-                        showNotification(`Redirecting to ${feature.title}...`, 'success');
-                    }
-                };
-                
-                featureModal.show();
-            }
-            
-            // Show revenue details in modal
-            function showRevenueDetails(revenueKey) {
-                const revenue = revenueDetails[revenueKey];
-                if (!revenue) return;
-                
-                const content = document.getElementById('revenueModalContent');
-                content.innerHTML = `
-                    <div class="row">
-                        <div class="col-md-6">
-                            <img src="${revenue.image}" alt="${revenue.title}" class="img-fluid rounded-3 mb-3">
-                        </div>
-                        <div class="col-md-6">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="revenue-icon me-3">
-                                    <i class="${revenue.icon}"></i>
-                                </div>
-                                <h4>${revenue.title}</h4>
-                            </div>
-                            <p>${revenue.description}</p>
-                            <h5 class="mt-4">Key Details:</h5>
-                            <ul>
-                                ${revenue.details.map(detail => `<li>${detail}</li>`).join('')}
-                            </ul>
-                            <h5 class="mt-4">Performance Metrics:</h5>
-                            <div class="row">
-                                ${revenue.stats.map(stat => `
-                                    <div class="col-6">
-                                        <div class="text-center p-2">
-                                            <div class="h5">${stat.value}</div>
-                                            <div class="small">${stat.label}</div>
-                                        </div>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
-                    </div>
-                `;
-                
-                document.getElementById('revenueModalLabel').textContent = revenue.title;
-                document.getElementById('learnMoreRevenueBtn').onclick = function() {
-                    revenueModal.hide();
-                    showNotification('Opening detailed documentation...', 'info');
-                };
-                
-                revenueModal.show();
-            }
-            
-            // Show impact details in modal
-            function showImpactDetails(impactKey) {
-                const impact = impactDetails[impactKey];
-                if (!impact) return;
-                
-                const content = document.getElementById('impactModalContent');
-                content.innerHTML = `
-                    <div class="row">
-                        <div class="col-md-6">
-                            <img src="${impact.image}" alt="${impact.title}" class="img-fluid rounded-3 mb-3">
-                        </div>
-                        <div class="col-md-6">
-                            <div class="d-flex align-items-center mb-3">
-                                <div class="impact-icon ${impactKey} me-3">
-                                    <i class="${impact.icon}"></i>
-                                </div>
-                                <h4>${impact.title}</h4>
-                            </div>
-                            <p>${impact.description}</p>
-                            <h5 class="mt-4">Key Benefits:</h5>
-                            <ul>
-                                ${impact.benefits.map(benefit => `<li>${benefit}</li>`).join('')}
-                            </ul>
-                            <h5 class="mt-4">Testimonials:</h5>
-                            ${impact.testimonials.map(testimonial => `
-                                <div class="card bg-transparent border-secondary mb-3">
-                                    <div class="card-body">
-                                        <p class="card-text fst-italic">"${testimonial.quote}"</p>
-                                        <footer class="blockquote-footer mt-0">${testimonial.author}, <cite title="Source Title">${testimonial.role}</cite></footer>
-                                    </div>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-                
-                document.getElementById('impactModalLabel').textContent = impact.title;
-                document.getElementById('getStartedImpactBtn').onclick = function() {
-                    impactModal.hide();
-                    if (!isLoggedIn) {
-                        showNotification('Please sign up or log in to get started', 'info');
-                        signupModal.show();
-                    } else {
-                        showNotification(`Setting up ${impact.title} experience...`, 'success');
-                    }
-                };
-                
-                impactModal.show();
-            }
-            
-            // Show plan details in modal
-            function showPlanDetails(planKey) {
-                const plan = planDetails[planKey];
-                if (!plan) return;
-                
-                const content = document.getElementById('planModalContent');
-                content.innerHTML = `
-                    <div class="row">
-                        <div class="col-md-6">
-                            <img src="${plan.image}" alt="${plan.title}" class="img-fluid rounded-3 mb-3">
-                            <div class="text-center">
-                                <div class="h3">${plan.price}</div>
-                                <p>${plan.description}</p>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <h4>${plan.title}</h4>
-                            <h5 class="mt-4">Features Included:</h5>
-                            <ul>
-                                ${plan.features.map(feature => `<li><i class="fas fa-check-circle text-success me-2"></i>${feature}</li>`).join('')}
-                            </ul>
-                            <h5 class="mt-4">Available Add-ons:</h5>
-                            <ul>
-                                ${plan.addOns.map(addOn => `<li>${addOn.name} - ${addOn.price}</li>`).join('')}
-                            </ul>
-                        </div>
-                    </div>
-                `;
-                
-                document.getElementById('planModalLabel').textContent = plan.title;
-                document.getElementById('subscribePlanBtn').onclick = function() {
-                    planModal.hide();
-                    if (!isLoggedIn) {
-                        showNotification('Please sign up or log in to subscribe', 'info');
-                        signupModal.show();
-                    } else {
-                        showNotification(`Processing subscription to ${plan.title}...`, 'success');
-                    }
-                };
-                
-                planModal.show();
-            }
             
             // Contact form submission
             document.getElementById('contactForm').addEventListener('submit', function(e) {
                 e.preventDefault();
                 
-                const name = document.getElementById('contactName').value;
-                const email = document.getElementById('contactEmail').value;
-                const subject = document.getElementById('contactSubject').value;
-                const userType = document.getElementById('contactUserType').value;
-                const message = document.getElementById('contactMessage').value;
-                
                 // Simulate form submission
-                if (name && email && message) {
-                    // Show success message
-                    showNotification('Thank you for your message! We will get back to you soon.', 'success');
+                showNotification('Your message has been sent successfully! We\'ll get back to you soon.', 'success');
+                this.reset();
+            });
+            
+            // Feature card clicks
+            document.querySelectorAll('.feature-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const feature = this.dataset.feature;
+                    const details = featureDetails[feature];
                     
-                    // Reset form
-                    this.reset();
+                    if (details) {
+                        document.getElementById('featureModalLabel').textContent = details.title;
+                        document.getElementById('featureModalContent').innerHTML = `
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <img src="${details.image}" alt="${details.title}" class="img-fluid rounded-3 mb-3">
+                                </div>
+                                <div class="col-md-6">
+                                    <p>${details.description}</p>
+                                    <h5 class="mt-4">Key Benefits:</h5>
+                                    <ul>
+                                        ${details.benefits.map(benefit => `<li>${benefit}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            </div>
+                        `;
+                        featureModal.show();
+                    }
+                });
+            });
+            
+            // Revenue card clicks
+            document.querySelectorAll('.revenue-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const revenue = this.dataset.revenue;
+                    const details = revenueDetails[revenue];
+                    
+                    if (details) {
+                        document.getElementById('revenueModalLabel').textContent = details.title;
+                        document.getElementById('revenueModalContent').innerHTML = `
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <img src="${details.image}" alt="${details.title}" class="img-fluid rounded-3 mb-3">
+                                </div>
+                                <div class="col-md-6">
+                                    <p>${details.description}</p>
+                                    <h5 class="mt-4">Key Details:</h5>
+                                    <ul>
+                                        ${details.details.map(detail => `<li>${detail}</li>`).join('')}
+                                    </ul>
+                                    <h5 class="mt-4">Performance Metrics:</h5>
+                                    <div class="row">
+                                        ${details.stats.map(stat => `
+                                            <div class="col-6">
+                                                <div class="text-center">
+                                                    <div class="h4">${stat.value}</div>
+                                                    <div class="text-muted">${stat.label}</div>
+                                                </div>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        revenueModal.show();
+                    }
+                });
+            });
+            
+            // Impact card clicks
+            document.querySelectorAll('.impact-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const impact = this.dataset.impact;
+                    const details = impactDetails[impact];
+                    
+                    if (details) {
+                        document.getElementById('impactModalLabel').textContent = details.title;
+                        document.getElementById('impactModalContent').innerHTML = `
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <img src="${details.image}" alt="${details.title}" class="img-fluid rounded-3 mb-3">
+                                </div>
+                                <div class="col-md-6">
+                                    <p>${details.description}</p>
+                                    <h5 class="mt-4">Key Benefits:</h5>
+                                    <ul>
+                                        ${details.benefits.map(benefit => `<li>${benefit}</li>`).join('')}
+                                    </ul>
+                                    <h5 class="mt-4">Testimonials:</h5>
+                                    ${details.testimonials.map(testimonial => `
+                                        <div class="mb-3">
+                                            <blockquote class="blockquote">
+                                                <p>"${testimonial.quote}"</p>
+                                                <footer class="blockquote-footer">${testimonial.author}, <cite title="Source Title">${testimonial.role}</cite></footer>
+                                            </blockquote>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        `;
+                        impactModal.show();
+                    }
+                });
+            });
+            
+            // Plan button clicks
+            document.querySelectorAll('.plan-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const plan = this.dataset.plan;
+                    const details = planDetails[plan];
+                    
+                    if (details) {
+                        document.getElementById('planModalLabel').textContent = details.title;
+                        document.getElementById('planModalContent').innerHTML = `
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <img src="${details.image}" alt="${details.title}" class="img-fluid rounded-3 mb-3">
+                                    <div class="text-center">
+                                        <div class="h2">${details.price}</div>
+                                        <p class="text-muted">${details.description}</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5 class="mt-4">Features:</h5>
+                                    <ul>
+                                        ${details.features.map(feature => `<li>${feature}</li>`).join('')}
+                                    </ul>
+                                    <h5 class="mt-4">Add-ons:</h5>
+                                    <ul>
+                                        ${details.addOns.map(addOn => `<li>${addOn.name}: ${addOn.price}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            </div>
+                        `;
+                        planModal.show();
+                    }
+                });
+            });
+            
+            // Try feature button
+            document.getElementById('tryFeatureBtn').addEventListener('click', function() {
+                featureModal.hide();
+                showNotification('Redirecting to feature demo...', 'info');
+            });
+            
+            // Learn more revenue button
+            document.getElementById('learnMoreRevenueBtn').addEventListener('click', function() {
+                revenueModal.hide();
+                showNotification('Redirecting to revenue details...', 'info');
+            });
+            
+            // Get started impact button
+            document.getElementById('getStartedImpactBtn').addEventListener('click', function() {
+                impactModal.hide();
+                document.getElementById('pricing').scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            // Subscribe plan button
+            document.getElementById('subscribePlanBtn').addEventListener('click', function() {
+                planModal.hide();
+                if (!isLoggedIn) {
+                    loginModal.show();
                 } else {
-                    // Show error message
-                    showNotification('Please fill in all required fields.', 'error');
+                    showNotification('Redirecting to subscription page...', 'info');
                 }
             });
             
-            // Show notification
-            function showNotification(message, type = 'info') {
-                // Create notification element
+            // Show notification function
+            function showNotification(message, type) {
                 const notification = document.createElement('div');
-                notification.className = `notification ${type}`;
+                notification.className = 'notification ' + type;
                 notification.textContent = message;
-                
-                // Add to DOM
                 document.body.appendChild(notification);
                 
-                // Show notification
-                setTimeout(() => {
-                    notification.classList.add('show');
-                }, 10);
+                // Trigger reflow
+                notification.offsetHeight;
                 
-                // Auto remove after 5 seconds
+                // Show notification
+                notification.classList.add('show');
+                
+                // Hide notification after 3 seconds
                 setTimeout(() => {
                     notification.classList.remove('show');
                     setTimeout(() => {
-                        notification.remove();
+                        document.body.removeChild(notification);
                     }, 300);
-                }, 5000);
+                }, 3000);
             }
             
-            // Intersection Observer for animations
+            // Animate roadmap items on scroll
             const observerOptions = {
                 root: null,
                 rootMargin: '0px',
@@ -3545,9 +3737,21 @@
                 });
             }, observerOptions);
             
-            // Observe elements for animation
-            document.querySelectorAll('.roadmap-item, .testimonial-card').forEach(el => {
-                observer.observe(el);
+            document.querySelectorAll('.roadmap-item').forEach(item => {
+                observer.observe(item);
+            });
+            
+            // Animate testimonial cards on scroll
+            const testimonialObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+            
+            document.querySelectorAll('.testimonial-card').forEach(card => {
+                testimonialObserver.observe(card);
             });
         });
     </script>
