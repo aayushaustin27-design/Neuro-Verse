@@ -38,7 +38,7 @@
             --input-focus-bg: rgba(255, 255, 255, 0.1);
             --input-focus-border: var(--primary-color);
             --input-focus-shadow: rgba(67, 97, 238, 0.1);
-            --input-placeholder-color: rgba(255, 255, 255, 0.7); /* Changed to white with opacity for dark mode */
+            --input-placeholder-color: rgba(255, 255, 255, 0.7);
             --btn-primary-bg: linear-gradient(135deg, var(--primary-color) 0%, var(--bitcoin-color) 100%);
             --btn-primary-hover-shadow: rgba(67, 97, 238, 0.3);
             --btn-outline-primary-border: var(--primary-color);
@@ -60,6 +60,10 @@
             --cta-bg: linear-gradient(135deg, var(--primary-color) 0%, var(--bitcoin-color) 100%);
             --timeline-color: linear-gradient(135deg, var(--primary-color) 0%, var(--bitcoin-color) 100%);
             --dot-shadow: rgba(67, 97, 238, 0.2);
+            /* Dropdown specific colors */
+            --dropdown-bg: #212529;
+            --dropdown-text: #ffffff;
+            --dropdown-hover-bg: #343a40;
         }
 
         body.light-theme {
@@ -104,6 +108,10 @@
             --cta-bg: linear-gradient(135deg, var(--primary-color) 0%, var(--bitcoin-color) 100%);
             --timeline-color: linear-gradient(135deg, var(--primary-color) 0%, var(--bitcoin-color) 100%);
             --dot-shadow: rgba(67, 97, 238, 0.2);
+            /* Dropdown specific colors */
+            --dropdown-bg: #ffffff;
+            --dropdown-text: #212529;
+            --dropdown-hover-bg: #f8f9fa;
         }
 
         * {
@@ -782,6 +790,12 @@
             color: var(--text-color);
             font-weight: 500;
             margin-bottom: 10px;
+        }
+
+        /* Dropdown options styling */
+        .form-select option {
+            background-color: var(--dropdown-bg);
+            color: var(--dropdown-text);
         }
 
         /* CTA Section */
